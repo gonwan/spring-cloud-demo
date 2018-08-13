@@ -13,12 +13,6 @@ while ! `nc -z config-server $CONFIG_SERVER_PORT`; do sleep 3; done
 echo "*******  Configuration Server has started"
 
 echo "********************************************************"
-echo "Waiting for Rabbit to start on port: $RABBIT_PORT"
-echo "********************************************************"
-while ! `nc -z rabbit $RABBIT_PORT`; do sleep 10; done
-echo "******* Rabbit has started"
-
-echo "********************************************************"
 echo "Waiting for Zipkin to start on port: $ZIPKIN_PORT"
 echo "********************************************************"
 while ! `nc -z zipkin $ZIPKIN_PORT`; do sleep 10; done
