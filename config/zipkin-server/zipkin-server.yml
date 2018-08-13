@@ -13,7 +13,7 @@ spring:
     username: "springcloud"
     password: "sc_passw0rd"
     driverClassName: com.mysql.jdbc.Driver
-    type: org.apache.tomcat.jdbc.pool.DataSource
+    type: com.zaxxer.hikari.HikariDataSource
     tomcat:
       maxActive: 2
       maxIdle: 2

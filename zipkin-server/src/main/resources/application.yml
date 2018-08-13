@@ -9,11 +9,11 @@ zipkin:
 spring:
   datasource:
     schema: classpath:mysql.sql
-    url: "jdbc:mysql://192.168.11.234:3306/sc_database?useUnicode=true&characterEncoding=utf8"
+    url: "jdbc:mysql://localhost:3306/sc_database?useUnicode=true&characterEncoding=utf8"
     username: "springcloud"
     password: "sc_passw0rd"
     driverClassName: com.mysql.jdbc.Driver
-    type: org.apache.tomcat.jdbc.pool.DataSource
+    type: com.zaxxer.hikari.HikariDataSource
     tomcat:
       maxActive: 2
       maxIdle: 2
