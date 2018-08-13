@@ -18,15 +18,11 @@ spring:
     password: "sc_passw0rd"
     driverClassName: com.mysql.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
-    tomcat:
-      maxActive: 2
-      maxIdle: 2
-      minIdle: 1
-      testOnBorrow: true
-      validationQuery: "select 1"
-      timeBetweenEvictionRunsMillis: 1800000
-      minEvictableIdleTimeMillis: 3600000
-      numTestsPerEvictionRun: 30
+    hikari:
+      minimumIdle: 1
+      maximumPoolSize: 2
+      idleTimeout: 600000
+      maxLifetime: 1800000
   redis:
     host: 192.168.11.234
     port: 6379
