@@ -55,7 +55,6 @@ security:
       userInfoUri: http://localhost:8901/auth/user
     client:
       clientId: eagleeye
-      grantType: password
 
 logging:
   level:

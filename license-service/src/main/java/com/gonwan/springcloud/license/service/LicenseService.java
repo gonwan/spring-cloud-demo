@@ -31,6 +31,10 @@ public class LicenseService {
 
     public License getLicense(String organizationId, String licenseId) {
         License license = licenseRepository.findByIdAndOrganizationId(licenseId, organizationId);
+        if (license == null) {
+            logger.debug("Cannot find license with id: {}", licenseId);
+            return null;
+        }
         Organization org = getOrganization(organizationId);
         if (org == null) {
             logger.debug("Cannot find organization with id: {}", organizationId);

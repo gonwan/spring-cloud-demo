@@ -1,6 +1,5 @@
 package com.gonwan.springcloud.license;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -28,27 +27,29 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableResourceServer
 @EnableCircuitBreaker
 @EnableCaching
-@EnableOAuth2Client  // see: https://github.com/spring-projects/spring-security-oauth/issues/1275 & OAuth2RestOperationsConfiguration
+@EnableOAuth2Client  /* Also see: UserInfoTokenServices, access token + client id --> user authentication. */
 public class LicenseApplication {
 
-    // also see: https://stackoverflow.com/questions/40406858/configuring-spring-oauth2-client-for-client-credentials-flow
-    // security:
-    //   oauth2:
-    //     client:
-    //       grant-type: client_credentials
+   /*
+    * See: OAuth2RestOperationsConfiguration.SessionScopedConfiguration#oauth2ClientContext().
+    *      OAuth2ProtectedResourceDetailsConfiguration#oauth2RemoteResource(), OAuth2RestTemplate only uses xx.
+    */
     @LoadBalanced
     @Bean
     @ConditionalOnProperty(prefix = "eureka", name = "client.enabled", havingValue = "true", matchIfMissing = true)
-    public OAuth2RestTemplate lbOauth2RestTemplate(@Qualifier("oauth2ClientContext") OAuth2ClientContext oauth2ClientContext, OAuth2ProtectedResourceDetails details) {
+    public OAuth2RestTemplate lbOauth2RestTemplate(OAuth2ProtectedResourceDetails details, OAuth2ClientContext oauth2ClientContext) {
         return new OAuth2RestTemplate(details, oauth2ClientContext);
     }
 
     @Bean
     @ConditionalOnProperty(prefix = "eureka", name = "client.enabled", havingValue = "false", matchIfMissing = false)
-    public OAuth2RestTemplate oauth2RestTemplate(@Qualifier("oauth2ClientContext") OAuth2ClientContext oauth2ClientContext, OAuth2ProtectedResourceDetails details) {
+    public OAuth2RestTemplate oauth2RestTemplate(OAuth2ProtectedResourceDetails details, OAuth2ClientContext oauth2ClientContext) {
         return new OAuth2RestTemplate(details, oauth2ClientContext);
     }
 
+    /*
+     * CacheManager in spring boot 1.5.x uses this.
+     */
     @Bean
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
@@ -61,7 +62,7 @@ public class LicenseApplication {
     }
 
     /*
-     * Required for spring boot 2.0, or default JDK serializer are used.
+     * Required for spring boot 2.0, or default JDK serializers are used.
      * See: RedisCacheConfiguration#cacheManager().
      */
     @Bean
