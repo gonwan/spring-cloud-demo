@@ -1,0 +1,72 @@
+server:
+  port: 8080
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+# mysql/redis/rabbit service name used here. 
+spring:
+  datasource:
+    url: "jdbc:mysql://mysql:3306/sc_database?useUnicode=true&characterEncoding=utf8"
+    username: "springcloud"
+    password: "{cipher}38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4"
+    driverClassName: com.mysql.jdbc.Driver
+    type: org.apache.tomcat.jdbc.pool.DataSource
+    tomcat:
+      maxActive: 2
+      maxIdle: 2
+      minIdle: 1
+      testOnBorrow: true
+      validationQuery: "select 1"
+      timeBetweenEvictionRunsMillis: 1800000
+      minEvictableIdleTimeMillis: 3600000
+      numTestsPerEvictionRun: 30
+  redis:
+    host: redis
+    port: 6379
+  cache:
+    type: REDIS
+  rabbitmq:
+    host: rabbit
+    port: 5672
+  cloud:
+    config:
+      # allow command line override
+      allowOverride: true
+      overrideSystemProperties: false
+    stream:
+      bindings:
+        inputOrganization:
+            destination: sc.organization.change.topic
+            contentType: application/json
+            group: license.group
+  sleuth:
+    sampler:
+      percentage: 1.0
+  zipkin:
+    sender:
+      # otherwise rabbit is used if available
+      type: WEB
+
+security:
+  oauth2:
+    resource:
+      userInfoUri: http://localhost:8901/auth/user
+    client:
+      clientId: eagleeye
+      grantType: password
+
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.gonwan.springcloud: DEBUG
+
+application:
+  organizationUrl: http://zuul-server/api/organization

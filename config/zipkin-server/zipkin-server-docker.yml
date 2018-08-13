@@ -1,0 +1,35 @@
+server:
+  port: 9411
+
+# https://stackoverflow.com/questions/39174579/how-to-configure-spring-cloud-zipkin-server-with-mysql-for-persistence
+zipkin:
+  storage:
+    type: mysql
+
+spring:
+  config:
+    # allow command line override
+    allowOverride: true
+    overrideSystemProperties: false
+  datasource:
+    schema: classpath:mysql.sql
+    url: "jdbc:mysql://mysql:3306/sc_database?useUnicode=true&characterEncoding=utf8"
+    username: "springcloud"
+    password: "{cipher}38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4"
+    driverClassName: com.mysql.jdbc.Driver
+    type: org.apache.tomcat.jdbc.pool.DataSource
+    tomcat:
+      maxActive: 2
+      maxIdle: 2
+      minIdle: 1
+      testOnBorrow: true
+      validationQuery: "select 1"
+      timeBetweenEvictionRunsMillis: 1800000
+      minEvictableIdleTimeMillis: 3600000
+      numTestsPerEvictionRun: 30
+
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.gonwan.springcloud: DEBUG

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        encrypt:
+          enabled: false
+eureka:
+  client:
+    enabled: false

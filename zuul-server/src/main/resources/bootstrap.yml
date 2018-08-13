@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: zuul-server
+  cloud:
+    config:
+      enabled: false
+eureka:
+  client:
+    enabled: false

@@ -1,0 +1,60 @@
+server:
+  port: 8888
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+#spring:
+#  cloud:
+#    config:
+#      #discovery:
+#        # Client config for config server discovery:
+#        # See: https://cloud.spring.io/spring-cloud-config/multi/multi__spring_cloud_config_client.html#discovery-first-bootstrap
+#        #enabled: true
+#        #service-id: config-server
+#      server:
+#        encrypt:
+#          enabled: false
+#        git:
+#          uri: https://github.com/gonwan/spring-cloud-demo/
+#          defaultLabel: master  # branch
+#          searchPaths: |
+#            config/zipkin-server,
+#            config/zuul-server,
+#            config/authentication-service,
+#            config/license-service,
+#            config/organization-service
+#          #username: gonwan
+#          #password: 123456
+
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: |
+            classpath:config/zipkin-server,
+            classpath:config/zuul-server,
+            classpath:config/authentication-service,
+            classpath:config/license-service,
+            classpath:config/organization-service
+#            # An extra `/` required under windows when using absolute paths
+#            file://${user.home}/Documents/github/restful/springcloud/config/zipkin-server,
+#            file://${user.home}/Documents/github/restful/springcloud/config/zuul-server,
+#            file://${user.home}/Documents/github/restful/springcloud/config/authentication-service,
+#            file://${user.home}/Documents/github/restful/springcloud/config/license-service,
+#            file://${user.home}/Documents/github/restful/springcloud/config/organization-service
+
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.gonwan.springcloud: DEBUG

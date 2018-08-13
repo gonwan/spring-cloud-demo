@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: organization-service
+  cloud:
+    config:
+      enabled: false
+eureka:
+  client:
+    enabled: false
