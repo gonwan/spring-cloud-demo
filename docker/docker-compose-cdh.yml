@@ -1,0 +1,91 @@
+version: '2'
+
+services:
+  # zipkin docker images require manually create mysql schemes, just use the java version here.
+  zipkin:
+    image: gonwan/sc-zipkin-server:${BUILD_NAME}
+    ports:
+    - "9411:9411"
+    environment:
+      PROFILE: "cdh"
+      SERVER_PORT: "9411"
+      CONFIG_SERVER_URI: "http://config-server:8888"
+      CONFIG_SERVER_PORT: "8888"
+      # used by spring to encrypt/decrypt password
+      ENCRYPT_KEY: "IMSYMMETRIC"
+  eureka-server:
+    image: gonwan/sc-eureka-server:${BUILD_NAME}
+    ports:
+    - "8761:8761"
+    environment:
+      SERVER_PORT: "8761"
+  config-server:
+    image: gonwan/sc-config-server:${BUILD_NAME}
+    ports:
+    - "8888:8888"
+    environment:
+      SERVER_PORT: "8888"
+      EUREKA_SERVER_URI: "http://eureka-server:8761/eureka/"
+      EUREKA_SERVER_PORT: "8761"
+      # curl http://localhost:8888/encrypt -X POST -d 'sc_passw0rd'
+      #   38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4
+      # curl http://localhost:8888/decrypt -X POST -d '38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4'
+      #   sc_passw0rd
+      ENCRYPT_KEY: "IMSYMMETRIC"
+  zuul-server:
+    image: gonwan/sc-zuul-server:${BUILD_NAME}
+    ports:
+    - "5555:5555"
+    environment:
+      PROFILE: "cdh"
+      SERVER_PORT: "5555"
+      EUREKA_SERVER_URI: "http://eureka-server:8761/eureka/"
+      CONFIG_SERVER_URI: "http://config-server:8888"
+      ZIPKIN_URI: "http://zipkin:9411"
+      EUREKA_SERVER_PORT: "8761"
+      CONFIG_SERVER_PORT: "8888"
+      ZIPKIN_PORT: "9411"
+  authentication-service:
+    image: gonwan/sc-authentication-service:${BUILD_NAME}
+    ports:
+    - "8901:8901"
+    environment:
+      PROFILE: "cdh"
+      SERVER_PORT: "8901"
+      EUREKA_SERVER_URI: "http://eureka-server:8761/eureka/"
+      CONFIG_SERVER_URI: "http://config-server:8888"
+      EUREKA_SERVER_PORT: "8761"
+      CONFIG_SERVER_PORT: "8888"
+      ENCRYPT_KEY: "IMSYMMETRIC"
+  organization-service:
+    image: gonwan/sc-organization-service:${BUILD_NAME}
+    ports:
+    - "8085:8085"
+    environment:
+      PROFILE: "cdh"
+      SERVER_PORT: "8085"
+      RABBIT_PORT: "5672"
+      EUREKA_SERVER_URI: "http://eureka-server:8761/eureka/"
+      CONFIG_SERVER_URI: "http://config-server:8888"
+      ZIPKIN_URI: "http://zipkin:9411"
+      AUTH_SERVICE_URI: "http://authentication-service:8901/auth/user"
+      EUREKA_SERVER_PORT: "8761"
+      CONFIG_SERVER_PORT: "8888"
+      ZIPKIN_PORT: "9411"
+      ENCRYPT_KEY: "IMSYMMETRIC"
+  license-service:
+    image: gonwan/sc-license-service:${BUILD_NAME}
+    ports:
+    - "8080:8080"
+    environment:
+      PROFILE: "cdh"
+      SERVER_PORT: "8080"
+      RABBIT_PORT: "5672"
+      EUREKA_SERVER_URI: "http://eureka-server:8761/eureka/"
+      CONFIG_SERVER_URI: "http://config-server:8888"
+      ZIPKIN_URI: "http://zipkin:9411"
+      AUTH_SERVICE_URI: "http://authentication-service:8901/auth/user"
+      EUREKA_SERVER_PORT: "8761"
+      CONFIG_SERVER_PORT: "8888"
+      ZIPKIN_PORT: "9411"
+      ENCRYPT_KEY: "IMSYMMETRIC"
