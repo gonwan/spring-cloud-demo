@@ -1,11 +1,15 @@
 package com.gonwan.springcloud.authentication.security;
 
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /*
  * We do not have @EnableWebSecurity, so it is not applied automatically.
@@ -13,6 +17,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 @Configuration
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
+
+    /* Test only, for spring boot 2.0 immigration. */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
 
     /* Expose a {@link AuthenticationManager} created from {@link #configure(AuthenticationManagerBuilder)} as a bean. */
     @Bean
@@ -26,6 +36,16 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     public UserDetailsService userDetailsServiceBean() throws Exception {
         return super.userDetailsServiceBean();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
+                .antMatchers("/**").permitAll()
+                .and()
+                .httpBasic();
     }
 
     @Override /* for password grant??? */

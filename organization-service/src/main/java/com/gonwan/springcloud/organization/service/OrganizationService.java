@@ -7,13 +7,14 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import com.gonwan.springcloud.organization.model.Organization;
 import com.gonwan.springcloud.organization.model.OrganizationRepository;
+
+import brave.Tracer;
 
 @Service
 public class OrganizationService {
@@ -31,7 +32,7 @@ public class OrganizationService {
     private Source source;
 
     public Organization get(String id) {
-        return repository.findById(id);
+        return repository.findById(id).orElse(null);
     }
 
     public void save(Organization org) {
@@ -47,7 +48,7 @@ public class OrganizationService {
     }
 
     public void delete(String id) {
-        repository.delete(id);
+        repository.deleteById(id);
         publish("DELETE", id);
     }
 
@@ -56,7 +57,7 @@ public class OrganizationService {
         Map<String, String> msg = new HashMap<>();
         msg.put("action", action);
         msg.put("organizationId", id);
-        msg.put("correlationId", tracer.getCurrentSpan().traceIdString());
+        msg.put("correlationId", tracer.currentSpan().context().traceIdString());
         source.output().send(MessageBuilder.withPayload(msg).build());
     }
 

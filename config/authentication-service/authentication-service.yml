@@ -11,14 +11,6 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
-security:
-  oauth2:
-    resource:
-      # See:
-      # - https://github.com/spring-projects/spring-security-oauth/issues/1016
-      # - https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-1.5-Release-Notes#oauth-2-resource-filter
-      filterOrder: 3
-
 logging:
   level:
     com.netflix: WARN

@@ -37,7 +37,7 @@ spring:
             contentType: application/json
   sleuth:
     sampler:
-      percentage: 0.0
+      probability: 0.0
   zipkin:
     sender:
       # otherwise rabbit is used if available
