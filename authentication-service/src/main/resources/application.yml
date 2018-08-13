@@ -1,6 +1,7 @@
 server:
-  contextPath: /auth
   port: 8901
+  servlet:
+    contextPath: /auth
 
 eureka:
   instance:
