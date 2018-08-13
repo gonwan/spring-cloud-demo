@@ -38,6 +38,9 @@ spring:
             destination: sc.organization.change.topic
             contentType: application/json
             group: license.group
+    # Workaround circular reference: https://github.com/spring-projects/spring-boot/issues/13042
+    refresh:
+      refreshable: NONE
   sleuth:
     sampler:
       probability: 0.0
