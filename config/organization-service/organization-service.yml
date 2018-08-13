@@ -12,6 +12,7 @@ eureka:
 
 spring:
   datasource:
+    initializationMode: ALWAYS
     url: "jdbc:mysql://192.168.11.234:3306/sc_database?useUnicode=true&characterEncoding=utf8"
     username: "springcloud"
     password: "sc_passw0rd"
