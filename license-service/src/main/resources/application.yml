@@ -64,5 +64,3 @@ logging:
 
 application:
   organizationUrl: http://localhost:8085
-debug: true
-
