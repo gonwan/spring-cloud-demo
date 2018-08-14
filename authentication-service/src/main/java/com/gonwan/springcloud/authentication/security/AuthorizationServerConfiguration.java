@@ -1,16 +1,19 @@
 package com.gonwan.springcloud.authentication.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 @Configuration
@@ -27,7 +30,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private RedisConnectionFactory redisConnectionFactory;
+    private TokenStore tokenStore;
 
     /*
      * Define client details.
@@ -61,7 +64,26 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         endpoints
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
-                .tokenStore(new RedisTokenStore(redisConnectionFactory));  /* default prefix: "access:" */
+                .tokenStore(tokenStore);  /* default prefix: "access:"/"auth_to_access:" */
+    }
+
+    @Configuration
+    static class DetailConfiguration {
+
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+            //return NoOpPasswordEncoder.getInstance();
+            /*
+             * Now the password looks like: "{bcrypt}" + BCryptPasswordEncoder.encode("rawPassword").
+             */
+            return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        }
+
+        @Bean
+        public TokenStore redisTokenStore(RedisConnectionFactory redisConnectionFactory) {
+            return new RedisTokenStore(redisConnectionFactory);  /* Jdk serializer by default and not so easy to change. */
+        }
+
     }
 
 }
