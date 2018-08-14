@@ -88,7 +88,7 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
                 .userDetailsService(userDetailsService);
     }
 
-    @Configuration
+    //@Configuration
     static class DetailConfiguration {
 
         @Bean
