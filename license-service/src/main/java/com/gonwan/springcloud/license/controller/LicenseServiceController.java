@@ -30,7 +30,7 @@ public class LicenseServiceController {
 
     /*
      * # curl http://localhost:8080/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses
-     * # curl -u eagleeye:thisissecret http://localhost:8901/auth/oauth/token -X POST -d "grant_type=password&scope=webclient&username=john.carnell&password=password1"
+     * # curl -u eagleeye:thisissecret http://localhost:8901/auth/oauth/token -X POST -d "grant_type=password&scope=webclient&username=user&password=password1"
      * {"access_token":"67cded20-2433-4b51-887e-6cfb16561cd5","token_type":"bearer","refresh_token":"2645a4d8-fc53-4c72-88e7-6707b97ca2e4","expires_in":43199,"scope":"webclient"}
      * # curl -H "Authorization: Bearer 67cded20-2433-4b51-887e-6cfb16561cd5" http://localhost:8080/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses
      */

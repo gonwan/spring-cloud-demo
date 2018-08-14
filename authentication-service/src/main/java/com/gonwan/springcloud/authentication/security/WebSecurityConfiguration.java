@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * The main purpose is to expose beans.
  */
 @Configuration
-public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /* Test only, for spring boot 2.0 immigration. */
     @Bean
@@ -38,6 +38,9 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         return super.userDetailsServiceBean();
     }
 
+    /*
+     * See migration guide: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-Security-2.0
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -48,12 +51,12 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .httpBasic();
     }
 
-    @Override /* for password grant??? */
+    @Override /* for password grant */
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("john.carnell").password("password1").roles("USER")
+                .withUser("user").password("password1").roles("USER")
                 .and()
-                .withUser("william.woodward").password("password2").roles("USER", "ADMIN");
+                .withUser("admin").password("password2").roles("USER", "ADMIN");
     }
 
 }

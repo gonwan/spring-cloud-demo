@@ -20,11 +20,9 @@ import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableResourceServer
 @EnableCircuitBreaker
 @EnableCaching
 @EnableOAuth2Client  /* Also see: UserInfoTokenServices, access token + client id --> user authentication. */

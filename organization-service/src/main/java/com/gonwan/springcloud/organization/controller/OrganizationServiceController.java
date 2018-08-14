@@ -28,7 +28,7 @@ public class OrganizationServiceController {
 
     /*
      * # curl http://localhost:8085/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a
-     * # curl -u eagleeye:thisissecret http://localhost:8901/auth/oauth/token -X POST -d "grant_type=password&scope=webclient&username=john.carnell&password=password1"
+     * # curl -u eagleeye:thisissecret http://localhost:8901/auth/oauth/token -X POST -d "grant_type=password&scope=webclient&username=user&password=password1"
      * {"access_token":"08b6eca8-010a-4c6b-a421-f1d5d02a6061","token_type":"bearer","refresh_token":"e67bf15c-f3d8-4092-8eff-0ddbf00984f0","expires_in":43199,"scope":"webclient"}
      * # curl -H "Authorization: Bearer 08b6eca8-010a-4c6b-a421-f1d5d02a6061" http://localhost:8085/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a
      */
