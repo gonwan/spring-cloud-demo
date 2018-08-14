@@ -7,8 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -27,8 +25,10 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+/*
+ * Verify JWT Token with: https://jwt.io/
+ */
 //@Configuration
 //@EnableAuthorizationServer  /* @EnableResourceServer is used in client to protect resources. */
 public class JwtAuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
@@ -43,13 +43,13 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private TokenStore tokenStore;
+    private TokenEnhancer jwtTokenEnhancer;
 
     @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
     @Autowired
-    private TokenEnhancer jwtTokenEnhancer;
+    private TokenStore jwtTokenStore;
 
     /*
      * Define client details.
@@ -82,8 +82,7 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
-        endpoints.tokenStore(tokenStore)
-                .accessTokenConverter(jwtAccessTokenConverter)
+        endpoints.tokenStore(jwtTokenStore)
                 .tokenEnhancer(tokenEnhancerChain)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService);
@@ -93,19 +92,17 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
     static class DetailConfiguration {
 
         @Bean
-        public TokenStore tokenStore() {
-            return new JwtTokenStore(jwtAccessTokenConverter());
+        public TokenEnhancer jwtTokenEnhancer() {
+            return new TokenEnhancer() {
+                @Override
+                public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+                    Map<String, Object> additionalInfo = new HashMap<>();
+                    additionalInfo.put("organization_id", "org123");
+                    ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
+                    return accessToken;
+                }
+            };
         }
-
-        @Bean
-        @Primary
-        public DefaultTokenServices tokenServices() {
-            DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-            defaultTokenServices.setTokenStore(tokenStore());
-            defaultTokenServices.setSupportRefreshToken(true);
-            return defaultTokenServices;
-        }
-
 
         @Bean
         public JwtAccessTokenConverter jwtAccessTokenConverter() {
@@ -115,18 +112,18 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
         }
 
         @Bean
-        public TokenEnhancer jwtTokenEnhancer() {
-            return new TokenEnhancer() {
-                @Override
-                public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-                    Map<String, Object> additionalInfo = new HashMap<>();
-                    additionalInfo.put("organizationId", "myorg");
-                    ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
-                    return accessToken;
-                }
-            };
+        public TokenStore jwtTokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
+            return new JwtTokenStore(jwtAccessTokenConverter);
         }
-        
+
+        @Bean
+        public DefaultTokenServices jwtTokenServices(TokenStore jwtTokenStore) {
+            DefaultTokenServices tokenServices = new DefaultTokenServices();
+            tokenServices.setTokenStore(jwtTokenStore);
+            tokenServices.setSupportRefreshToken(true);
+            return tokenServices;
+        }
+
         @Bean
         public PasswordEncoder passwordEncoder() {
             //return NoOpPasswordEncoder.getInstance();
@@ -134,11 +131,6 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
              * Now the password looks like: "{bcrypt}" + BCryptPasswordEncoder.encode("rawPassword").
              */
             return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        }
-
-        @Bean
-        public TokenStore redisTokenStore(RedisConnectionFactory redisConnectionFactory) {
-            return new RedisTokenStore(redisConnectionFactory);  /* Jdk serializer by default and not so easy to change. */
         }
 
     }
