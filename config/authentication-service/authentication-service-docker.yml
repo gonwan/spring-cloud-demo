@@ -18,6 +18,9 @@ spring:
       # allow command line override
       allowOverride: true
       overrideSystemProperties: false
+  redis:
+    host: redis
+    port: 6379
 
 logging:
   level:

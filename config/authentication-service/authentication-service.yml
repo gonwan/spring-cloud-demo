@@ -12,6 +12,11 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
+spring:
+  redis:
+    host: 192.168.11.234
+    port: 6379
+
 logging:
   level:
     com.netflix: WARN

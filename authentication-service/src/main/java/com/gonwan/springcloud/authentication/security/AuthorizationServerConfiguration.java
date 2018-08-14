@@ -57,7 +57,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         endpoints
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
-                .tokenStore(new RedisTokenStore(redisConnectionFactory));
+                .tokenStore(new RedisTokenStore(redisConnectionFactory));  /* default prefix: "access:" */
     }
 
 }
