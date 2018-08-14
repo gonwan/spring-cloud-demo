@@ -9,7 +9,6 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.SubscribableChannel;
 
 import com.gonwan.springcloud.license.client.OrganizationRestTemplateClient;
-import com.gonwan.springcloud.license.model.OrganizationRepository;
 
 interface OrganizationChannel {
 
@@ -22,9 +21,6 @@ interface OrganizationChannel {
 public class OrganizationMessageHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(OrganizationMessageHandler.class);
-
-    @Autowired
-    private OrganizationRepository repository;
 
     /* @CacheEvict only available in proxy mode, so define it in another bean. */
     @Autowired
