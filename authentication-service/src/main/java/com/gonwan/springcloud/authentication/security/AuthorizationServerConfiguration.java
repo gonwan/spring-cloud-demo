@@ -81,7 +81,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
         @Bean
         public TokenStore redisTokenStore(RedisConnectionFactory redisConnectionFactory) {
-            return new RedisTokenStore(redisConnectionFactory);  /* Jdk serializer by default and not so easy to change. */
+            RedisTokenStore tokenStore = new RedisTokenStore(redisConnectionFactory);
+            tokenStore.setPrefix("oauth2:");
+            return tokenStore;  /* Jdk serializer by default and not so easy to change. */
         }
 
     }
