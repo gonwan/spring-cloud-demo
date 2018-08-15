@@ -35,7 +35,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: eureka-server-svc
+  name: eureka-server
 spec:
   selector:
     app: eureka-server
@@ -72,7 +72,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: config-server-svc
+  name: config-server
 spec:
   selector:
     app: config-server
@@ -104,7 +104,7 @@ spec:
         - name: SERVER_PORT
           value: "8888"
         - name: EUREKA_SERVER_URI
-          value: "http://eureka-server-svc:8761/eureka/"
+          value: "http://eureka-server:8761/eureka/"
         - name: EUREKA_SERVER_PORT
           value: "8761"
         - name: ENCRYPT_KEY
@@ -115,7 +115,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: zipkin-server-svc
+  name: zipkin
 spec:
   selector:
     app: zipkin-server
@@ -140,7 +140,7 @@ spec:
     spec:
       containers:
       - name: zipkin-server
-        image: 192.168.11.235:5000/gonwan/sc-zikin-server:2.0.0
+        image: 192.168.11.235:5000/gonwan/sc-zipkin-server:2.0.0
         ports:
         - containerPort: 9411
         env:
@@ -149,7 +149,7 @@ spec:
         - name: SERVER_PORT
           value: "9411"
         - name: CONFIG_SERVER_URI
-          value: "http://config-server-svc:8888"
+          value: "http://config-server:8888"
         - name: CONFIG_SERVER_PORT
           value: "8888"
         - name: ENCRYPT_KEY
@@ -160,7 +160,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: zuul-server-svc
+  name: zuul-server
 spec:
   selector:
     app: zuul-server
@@ -194,11 +194,11 @@ spec:
         - name: SERVER_PORT
           value: "5555"
         - name: EUREKA_SERVER_URI
-          value: "http://eureka-server-svc:8761/eureka/"
+          value: "http://eureka-server:8761/eureka/"
         - name: CONFIG_SERVER_URI
-          value: "http://config-server-svc:8888"
+          value: "http://config-server:8888"
         - name: ZIPKIN_URI
-          value: "http://zipkin-server-svc:9411"
+          value: "http://zipkin:9411"
         - name: EUREKA_SERVER_PORT
           value: "8761"
         - name: CONFIG_SERVER_PORT
@@ -211,7 +211,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: authentication-service-svc
+  name: authentication-service
 spec:
   selector:
     app: authentication-service
@@ -236,7 +236,7 @@ spec:
     spec:
       containers:
       - name: authentication-service
-        image: 192.168.11.235:5000/gonwan/authentication-service:2.0.0
+        image: 192.168.11.235:5000/gonwan/sc-authentication-service:2.0.0
         ports:
         - containerPort: 8901
         env:
@@ -245,9 +245,9 @@ spec:
         - name: SERVER_PORT
           value: "8901"
         - name: EUREKA_SERVER_URI
-          value: "http://eureka-server-svc:8761/eureka/"
+          value: "http://eureka-server:8761/eureka/"
         - name: CONFIG_SERVER_URI
-          value: "http://config-server-svc:8888"
+          value: "http://config-server:8888"
         - name: EUREKA_SERVER_PORT
           value: "8761"
         - name: CONFIG_SERVER_PORT
@@ -260,7 +260,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: organization-service-svc
+  name: organization-service
 spec:
   selector:
     app: organization-service
@@ -285,7 +285,7 @@ spec:
     spec:
       containers:
       - name: organization-service
-        image: 192.168.11.235:5000/gonwan/organization-service:2.0.0
+        image: 192.168.11.235:5000/gonwan/sc-organization-service:2.0.0
         ports:
         - containerPort: 8085
         env:
@@ -294,11 +294,11 @@ spec:
         - name: SERVER_PORT
           value: "8901"
         - name: EUREKA_SERVER_URI
-          value: "http://eureka-server-svc:8761/eureka/"
+          value: "http://eureka-server:8761/eureka/"
         - name: CONFIG_SERVER_URI
-          value: "http://config-server-svc:8888"
+          value: "http://config-server:8888"
         - name: ZIPKIN_URI
-          value: "http://zipkin-server-svc:9411"
+          value: "http://zipkin:9411"
         - name: EUREKA_SERVER_PORT
           value: "8761"
         - name: CONFIG_SERVER_PORT
@@ -313,7 +313,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: license-service-svc
+  name: license-service
 spec:
   selector:
     app: license-service
@@ -338,7 +338,7 @@ spec:
     spec:
       containers:
       - name: license-service
-        image: 192.168.11.235:5000/gonwan/license-service:2.0.0
+        image: 192.168.11.235:5000/gonwan/sc-license-service:2.0.0
         ports:
         - containerPort: 8080
         env:
@@ -347,13 +347,13 @@ spec:
         - name: SERVER_PORT
           value: "8080"
         - name: EUREKA_SERVER_URI
-          value: "http://eureka-server-svc:8761/eureka/"
+          value: "http://eureka-server:8761/eureka/"
         - name: CONFIG_SERVER_URI
-          value: "http://config-server-svc:8888"
+          value: "http://config-server:8888"
         - name: ZIPKIN_URI
-          value: "http://zipkin-server-svc:9411"
+          value: "http://zipkin:9411"
         - name: AUTH_SERVICE_URI
-          value: "http://authentication-service-svc:8901/auth/user"
+          value: "http://authentication-service:8901/auth/user"
         - name: EUREKA_SERVER_PORT
           value: "8761"
         - name: CONFIG_SERVER_PORT
