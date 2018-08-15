@@ -12,6 +12,12 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/*
+ * The new OAuth2 support in Spring are actively developing. All functions are merging into core Spring Security 5.
+ * As a result, current implementation is suppose to change. See:
+ * - https://spring.io/blog/2018/01/30/next-generation-oauth-2-0-support-with-spring-security
+ * - https://github.com/spring-projects/spring-security/wiki/OAuth-2.0-Features-Matrix
+ */
 @SpringBootApplication
 @EnableEurekaClient
 @EnableResourceServer  /* required for the controller to work */

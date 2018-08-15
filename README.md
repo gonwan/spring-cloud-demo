@@ -19,6 +19,10 @@ The project includes:
 - [docker](docker): Docker compose support.
 - (TODO) [kubernetes](kubernetes): Kubernetes support.
 
+**NOTE**: The new OAuth2 support in Spring are actively developing. All functions are merging into core Spring Security 5. As a result, current implementation is suppose to change. See:
+- [https://spring.io/blog/2018/01/30/next-generation-oauth-2-0-support-with-spring-security](https://spring.io/blog/2018/01/30/next-generation-oauth-2-0-support-with-spring-security)
+- [https://github.com/spring-projects/spring-security/wiki/OAuth-2.0-Features-Matrix](https://github.com/spring-projects/spring-security/wiki/OAuth-2.0-Features-Matrix)
+
 # Tested Dependencies
 - Java 8+
 - Docker 1.13+

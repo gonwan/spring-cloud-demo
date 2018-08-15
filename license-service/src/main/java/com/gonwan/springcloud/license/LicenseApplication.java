@@ -67,6 +67,7 @@ public class LicenseApplication {
     public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration
                 .defaultCacheConfig()
+                .computePrefixWith(name -> name + ":")  /* override the default "::" */
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()));
         return RedisCacheManager.builder(connectionFactory).cacheDefaults(cacheConfiguration).build();
