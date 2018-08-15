@@ -30,7 +30,7 @@ public class LicenseApplication {
 
    /*
     * See: OAuth2RestOperationsConfiguration.SessionScopedConfiguration#oauth2ClientContext().
-    *      OAuth2ProtectedResourceDetailsConfiguration#oauth2RemoteResource(), OAuth2RestTemplate only uses xx.
+    *      OAuth2ProtectedResourceDetailsConfiguration#oauth2RemoteResource(), OAuth2RestTemplate only uses clientId.
     */
     @LoadBalanced
     @Bean

@@ -21,8 +21,6 @@ spring:
   redis:
     host: 172.16.87.12
     port: 6379
-    cluster:
-      nodes: ${spring.redis.host}:${spring.redis.port}
 
 logging:
   level:
