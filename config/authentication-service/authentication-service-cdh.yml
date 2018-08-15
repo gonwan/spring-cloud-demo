@@ -20,7 +20,7 @@ spring:
       overrideSystemProperties: false
   redis:
     cluster:
-      nodes: 172.16.87.12
+      nodes: 172.16.87.12:6379
 
 logging:
   level:
