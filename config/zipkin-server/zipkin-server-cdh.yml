@@ -14,7 +14,7 @@ spring:
   datasource:
     initializationMode: ALWAYS
     schema: classpath:mysql.sql
-    url: "jdbc:mysql://172.16.66.120:3306/sc_database?useUnicode=true&characterEncoding=utf8&autoReconnect=true&maxReconnects=3"
+    url: "jdbc:mysql://172.16.66.120:3306/sc_database?useUnicode=true&characterEncoding=utf8"
     username: "springcloud"
     password: "{cipher}38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4"
     driverClassName: com.mysql.jdbc.Driver
@@ -24,7 +24,6 @@ spring:
       maximumPoolSize: 2
       idleTimeout: 600000
       maxLifetime: 1800000
-      #connectionTimeout: 30000  # overall connection timeout = connectionTimeout * maxReconnects, see DriverManager#setLoginTimeout().
   # Workaround circular reference: https://github.com/spring-projects/spring-boot/issues/13042
   cloud:
     refresh:
