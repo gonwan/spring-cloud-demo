@@ -19,8 +19,8 @@ spring:
       allowOverride: true
       overrideSystemProperties: false
   redis:
-    host: 172.16.87.12
-    port: 6379
+    cluster:
+      nodes: 172.16.87.12
 
 logging:
   level:

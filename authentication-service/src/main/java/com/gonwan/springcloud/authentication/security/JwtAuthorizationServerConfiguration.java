@@ -19,7 +19,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -82,7 +81,7 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
-        endpoints.tokenStore(jwtTokenStore)
+        endpoints.tokenStore(jwtTokenStore)  /* or use a redis store?? */
                 .tokenEnhancer(tokenEnhancerChain)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService);
@@ -114,14 +113,6 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
         @Bean
         public TokenStore jwtTokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
             return new JwtTokenStore(jwtAccessTokenConverter);
-        }
-
-        @Bean
-        public DefaultTokenServices jwtTokenServices(TokenStore jwtTokenStore) {
-            DefaultTokenServices tokenServices = new DefaultTokenServices();
-            tokenServices.setTokenStore(jwtTokenStore);
-            tokenServices.setSupportRefreshToken(true);
-            return tokenServices;
         }
 
         @Bean
