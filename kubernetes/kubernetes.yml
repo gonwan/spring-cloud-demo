@@ -60,7 +60,7 @@ spec:
     spec:
       containers:
       - name: eureka-server
-        image: 172.16.87.12:5000/gonwan/sc-eureka-server:2.0.0
+        image: 192.168.11.235:5000/gonwan/sc-eureka-server:2.0.0
         ports:
         - containerPort: 8761
         env:
@@ -97,7 +97,7 @@ spec:
     spec:
       containers:
       - name: config-server
-        image: 172.16.87.12:5000/gonwan/sc-config-server:2.0.0
+        image: 192.168.11.235:5000/gonwan/sc-config-server:2.0.0
         ports:
         - containerPort: 8888
         env:
@@ -140,12 +140,12 @@ spec:
     spec:
       containers:
       - name: zipkin-server
-        image: 172.16.87.12:5000/gonwan/sc-zipkin-server:2.0.0
+        image: 192.168.11.235:5000/gonwan/sc-zipkin-server:2.0.0
         ports:
         - containerPort: 9411
         env:
         - name: PROFILE
-          value: "cdh"
+          value: "default"
         - name: SERVER_PORT
           value: "9411"
         - name: CONFIG_SERVER_URI
@@ -185,12 +185,12 @@ spec:
     spec:
       containers:
       - name: zuul-server
-        image: 172.16.87.12:5000/gonwan/sc-zuul-server:2.0.0
+        image: 192.168.11.235:5000/gonwan/sc-zuul-server:2.0.0
         ports:
         - containerPort: 5555
         env:
         - name: PROFILE
-          value: "cdh"
+          value: "default"
         - name: SERVER_PORT
           value: "5555"
         - name: EUREKA_SERVER_URI
@@ -236,12 +236,12 @@ spec:
     spec:
       containers:
       - name: authentication-service
-        image: 172.16.87.12:5000/gonwan/sc-authentication-service:2.0.0
+        image: 192.168.11.235:5000/gonwan/sc-authentication-service:2.0.0
         ports:
         - containerPort: 8901
         env:
         - name: PROFILE
-          value: "cdh"
+          value: "default"
         - name: SERVER_PORT
           value: "8901"
         - name: EUREKA_SERVER_URI
@@ -285,12 +285,12 @@ spec:
     spec:
       containers:
       - name: organization-service
-        image: 172.16.87.12:5000/gonwan/sc-organization-service:2.0.0
+        image: 192.168.11.235:5000/gonwan/sc-organization-service:2.0.0
         ports:
         - containerPort: 8085
         env:
         - name: PROFILE
-          value: "cdh"
+          value: "default"
         - name: SERVER_PORT
           value: "8901"
         - name: EUREKA_SERVER_URI
@@ -338,12 +338,12 @@ spec:
     spec:
       containers:
       - name: license-service
-        image: 172.16.87.12:5000/gonwan/sc-license-service:2.0.0
+        image: 192.168.11.235:5000/gonwan/sc-license-service:2.0.0
         ports:
         - containerPort: 8080
         env:
         - name: PROFILE
-          value: "cdh"
+          value: "default"
         - name: SERVER_PORT
           value: "8080"
         - name: EUREKA_SERVER_URI
