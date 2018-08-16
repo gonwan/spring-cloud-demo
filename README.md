@@ -5,7 +5,7 @@ The demo project is initialized from [https://github.com/carnellj/spmia-chapter1
 - Spring Boot 2.0 migration.
 - Switch from Postgres to MySQL, and from Kafka to RabbitMQ.
 - Easier local debugging by switching off service discovery and remote config file lookup.
-- (TODO) Kubernetes support.
+- Kubernetes support.
 
 The project includes:
 - [eureka-server](eureka-server): Service for service discovery. Registered services are shown on its web frontend, running at 8761 port.
@@ -52,7 +52,7 @@ docker-compose -f docker/docker-compose.yml up authentication-service organizati
 # Running Kubernetes
 NOTE: Kubernetes does not support environment variable substitution by default.
 ```
-kubectl apply -f kubernetes/kubernetes.yml
+kubectl create -f kubernetes/kubernetes.yml
 ```
 
 # Use Cases
