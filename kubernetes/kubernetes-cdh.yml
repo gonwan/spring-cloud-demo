@@ -42,7 +42,7 @@ spec:
   type: NodePort
   ports:
   - port: 8761
-    nodePort: 30001
+    nodePort: 31001
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -79,7 +79,7 @@ spec:
   type: NodePort
   ports:
   - port: 8888
-    nodePort: 30002
+    nodePort: 31002
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -122,7 +122,7 @@ spec:
   type: NodePort
   ports:
   - port: 9411
-    nodePort: 30003
+    nodePort: 31003
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -167,7 +167,7 @@ spec:
   type: NodePort
   ports:
   - port: 5555
-    nodePort: 30004
+    nodePort: 31004
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -218,7 +218,7 @@ spec:
   type: NodePort
   ports:
   - port: 8901
-    nodePort: 30005
+    nodePort: 31005
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -267,7 +267,7 @@ spec:
   type: NodePort
   ports:
   - port: 8085
-    nodePort: 30006
+    nodePort: 31006
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -292,7 +292,7 @@ spec:
         - name: PROFILE
           value: "cdh"
         - name: SERVER_PORT
-          value: "8901"
+          value: "8085"
         - name: EUREKA_SERVER_URI
           value: "http://eureka-server:8761/eureka/"
         - name: CONFIG_SERVER_URI
@@ -320,7 +320,7 @@ spec:
   type: NodePort
   ports:
   - port: 8080
-    nodePort: 30007
+    nodePort: 31007
 ---
 apiVersion: apps/v1
 kind: Deployment

@@ -17,7 +17,7 @@ The project includes:
 - [license-service](license-service): Application service holding license information, running at 8080. It also acts as an OAuth2 client to `authentication-service` for authorization.
 - [config](config): Config files hosted to be accessed by `config-server`.
 - [docker](docker): Docker compose support.
-- (TODO) [kubernetes](kubernetes): Kubernetes support.
+- [kubernetes](kubernetes): Kubernetes support.
 
 **NOTE**: The new OAuth2 support in Spring are actively developing. All functions are merging into core Spring Security 5. As a result, current implementation is suppose to change. See:
 - [https://spring.io/blog/2018/01/30/next-generation-oauth-2-0-support-with-spring-security](https://spring.io/blog/2018/01/30/next-generation-oauth-2-0-support-with-spring-security)
@@ -26,7 +26,7 @@ The project includes:
 # Tested Dependencies
 - Java 8+
 - Docker 1.13+
-- Kubernetes ???
+- Kubernetes 1.11+
 
 # Building Docker Images
 ```
@@ -50,4 +50,22 @@ docker-compose -f docker/docker-compose.yml up authentication-service organizati
 ```
 
 # Running Kubernetes
-TODO...
+NOTE: Kubernetes does not support environment variable substitution by default.
+```
+kubectl apply -f kubernetes/kubernetes.yml
+```
+
+# Use Cases
+Suppose you are using the kubernetes deployment. Get the OAuth2 token using `curl`, and the 31004 is the cluster-wide port of the Zuul gateway server:
+```
+# curl -u eagleeye:thisissecret http://172.16.87.12:31004/api/auth/auth/oauth/token -X POST -d "grant_type=password&scope=webclient&username=user&password=password1"
+{"access_token":"d3b817dc-fb7a-4e65-a080-d0e34c0dc4d5","token_type":"bearer","refresh_token":"a5d12d05-78ff-4170-ab4f-b9c4e9886358","expires_in":41496,"scope":"webclient"}
+```
+Use the token to get organization info:
+```
+curl -H "Authorization: Bearer d3b817dc-fb7a-4e65-a080-d0e34c0dc4d5" http://172.16.87.12:31004/api/organization/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a
+```
+Use the token to get organization info:
+```
+curl -H "Authorization: Bearer d3b817dc-fb7a-4e65-a080-d0e34c0dc4d5" http://172.16.87.12:31004/api/organization/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a
+```
