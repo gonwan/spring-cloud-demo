@@ -78,14 +78,14 @@ Use the token returned from previous request.
 ```
 
 ### Distributed Tracing via Zipkin
-Every response contains a correlation ID to help dignose possible failures among service call. Run with `curl -v` to get it:
+Every response contains a correlation ID to help diagnose possible failures among service call. Run with `curl -v` to get it:
 ```
 # curl -v ...
 ...
 < sc-correlation-id: 3265b50156556c05
 ...
 ```
-Search it in Zipkin to get all trace info, including latencies as you are interesred in.
+Search it in Zipkin to get all trace info, including latencies if you are interested in.
 ![zipkin-1](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/zipkin-1.png)
 ![zipkin-2](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/zipkin-2.png)
 
