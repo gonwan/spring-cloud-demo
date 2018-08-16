@@ -39,7 +39,7 @@ public class LicenseServiceController {
      * # curl -H "Authorization: Bearer 67cded20-2433-4b51-887e-6cfb16561cd5" http://localhost:8080/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses/f3831f8c-c338-4ebe-a82a-e2fc1d1ff78a
      */
     @GetMapping("/{licenseId}")
-    public License getLicenses(@PathVariable("organizationId") String organizationId, @PathVariable("licenseId") String licenseId) {
+    public License getLicense(@PathVariable("organizationId") String organizationId, @PathVariable("licenseId") String licenseId) {
         return licenseService.getLicense(organizationId, licenseId);
     }
 

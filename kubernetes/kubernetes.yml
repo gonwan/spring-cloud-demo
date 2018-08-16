@@ -299,6 +299,8 @@ spec:
           value: "http://config-server:8888"
         - name: ZIPKIN_URI
           value: "http://zipkin:9411"
+        - name: AUTH_SERVICE_URI
+          value: "http://authentication-service:8901/auth/user"
         - name: EUREKA_SERVER_PORT
           value: "8761"
         - name: CONFIG_SERVER_PORT

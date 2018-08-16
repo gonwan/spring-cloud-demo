@@ -56,16 +56,44 @@ kubectl apply -f kubernetes/kubernetes.yml
 ```
 
 # Use Cases
-Suppose you are using the kubernetes deployment. Get the OAuth2 token using `curl`, and the 31004 is the cluster-wide port of the Zuul gateway server:
+Suppose you are using the kubernetes deployment.
+
+### Get the OAuth2 token
+`curl` is used here, and the 31004 is the cluster-wide port of the Zuul gateway server:
 ```
 # curl -u eagleeye:thisissecret http://172.16.87.12:31004/api/auth/auth/oauth/token -X POST -d "grant_type=password&scope=webclient&username=user&password=password1"
 {"access_token":"d3b817dc-fb7a-4e65-a080-d0e34c0dc4d5","token_type":"bearer","refresh_token":"a5d12d05-78ff-4170-ab4f-b9c4e9886358","expires_in":41496,"scope":"webclient"}
 ```
-Use the token to get organization info:
+### Get organization info
+Use the token returned in previous request.
 ```
-curl -H "Authorization: Bearer d3b817dc-fb7a-4e65-a080-d0e34c0dc4d5" http://172.16.87.12:31004/api/organization/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a
+# curl -H "Authorization: Bearer d3b817dc-fb7a-4e65-a080-d0e34c0dc4d5" http://172.16.87.12:31004/api/organization/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a
+{"id":"e254f8c-c442-4ebe-a82a-e2fc1d1ff78a","name":"customer-crm-co","contactName":"Mark Balster","contactEmail":"mark.balster@custcrmco.com","contactPhone":"823-555-1212"}
 ```
-Use the token to get organization info:
+### Get license info associated with organization info
+Use the token returned in previous request.
 ```
-curl -H "Authorization: Bearer d3b817dc-fb7a-4e65-a080-d0e34c0dc4d5" http://172.16.87.12:31004/api/organization/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a
+# curl -H "Authorization: Bearer d3b817dc-fb7a-4e65-a080-d0e34c0dc4d5" http://172.16.87.12:31004/api/license/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses/f3831f8c-c338-4ebe-a82a-e2fc1d1ff78a
+{"id":"f3831f8c-c338-4ebe-a82a-e2fc1d1ff78a","organizationId":"e254f8c-c442-4ebe-a82a-e2fc1d1ff78a","organizationName":"customer-crm-co","contactName":"Mark Balster","contactPhone":"823-555-1212","contactEmail":"mark.balster@custcrmco.com","productName":"CustomerPro","licenseType":"user","licenseMax":100,"licenseAllocated":5,"comment":null}
 ```
+
+### Distributed Tracing via Zipkin
+Every request contains a correlation ID to help dignose possible failures among service call. Run with `curl -v` to get it:
+```
+# curl -v ...
+...
+< sc-correlation-id: 3265b50156556c05
+...
+```
+Search it in Zipkin to get all trace info.
+![zipkin-1](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/zipkin-1.png)
+![zipkin-2](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/zipkin-2.png)
+
+The license service caches organization info in Redis, prefixed with `organizations:`. So you may want to clear them to get a full tracing of cross service invoke.
+```
+redis-cli -h 172.16.87.12 -c del $(redis-cli -h 172.16.87.12 -c keys organizations* | gawk '{ print $1 }')
+
+```
+
+### Working with OAuth2
+All OAuth2 tokens are cached in Redis, prefixed with "oauth2". There is also JWT token support. Comment/Uncomment `@Configuration` in `AuthorizationServerConfiguration` and `JwtAuthorizationServerConfiguration` classes to swith on/off.
