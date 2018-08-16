@@ -15,7 +15,7 @@ spring:
     initializationMode: ALWAYS
     url: "jdbc:mysql://192.168.11.234:3306/sc_database?useUnicode=true&characterEncoding=utf8"
     username: "springcloud"
-    password: "sc_passw0rd"
+    password: "{cipher}38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4"
     driverClassName: com.mysql.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -32,6 +32,10 @@ spring:
     host: 192.168.11.234
     port: 5672
   cloud:
+    config:
+      # allow command line override
+      allowOverride: true
+      overrideSystemProperties: false
     stream:
       bindings:
         inputOrganization:
@@ -43,7 +47,7 @@ spring:
       refreshable: NONE
   sleuth:
     sampler:
-      probability: 0.0
+      probability: 1.0
   zipkin:
     sender:
       # otherwise rabbit is used if available
@@ -63,4 +67,4 @@ logging:
     com.gonwan.springcloud: DEBUG
 
 application:
-  organizationUrl: http://localhost:8085
+  organizationUrl: http://zuul-server/api/organization

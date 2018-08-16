@@ -13,6 +13,11 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 
 spring:
+  cloud:
+    config:
+      # allow command line override
+      allowOverride: true
+      overrideSystemProperties: false
   redis:
     host: 192.168.11.234
     port: 6379

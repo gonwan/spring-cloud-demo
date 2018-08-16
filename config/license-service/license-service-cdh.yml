@@ -10,7 +10,6 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
-# mysql/redis/rabbit service name used here. 
 spring:
   datasource:
     initializationMode: ALWAYS

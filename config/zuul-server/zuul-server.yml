@@ -11,9 +11,14 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 
 spring:
+  cloud:
+    config:
+      # allow command line override
+      allowOverride: true
+      overrideSystemProperties: false
   sleuth:
     sampler:
-      probability: 0.0
+      probability: 1.0
   zipkin:
     sender:
       # otherwise rabbit is used if available
