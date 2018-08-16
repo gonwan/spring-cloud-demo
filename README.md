@@ -4,7 +4,7 @@ The demo project is initialized from [https://github.com/carnellj/spmia-chapter1
 - Java 9+ support.
 - Spring Boot 2.0 migration.
 - Switch from Postgres to MySQL, and from Kafka to RabbitMQ.
-- Easier local debugging by swithing off service discovery and remote config file lookup.
+- Easier local debugging by switching off service discovery and remote config file lookup.
 - (TODO) Kubernetes support.
 
 The project includes:
@@ -92,8 +92,7 @@ Search it in Zipkin to get all trace info.
 The license service caches organization info in Redis, prefixed with `organizations:`. So you may want to clear them to get a full tracing of cross service invoke.
 ```
 redis-cli -h 172.16.87.12 -c del $(redis-cli -h 172.16.87.12 -c keys organizations* | gawk '{ print $1 }')
-
 ```
 
 ### Working with OAuth2
-All OAuth2 tokens are cached in Redis, prefixed with "oauth2". There is also JWT token support. Comment/Uncomment `@Configuration` in `AuthorizationServerConfiguration` and `JwtAuthorizationServerConfiguration` classes to swith on/off.
+All OAuth2 tokens are cached in Redis, prefixed with "oauth2". There is also JWT token support. Comment/Uncomment `@Configuration` in `AuthorizationServerConfiguration` and `JwtAuthorizationServerConfiguration` classes to switch it on/off.
