@@ -9,13 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gonwan.springcloud.license.service.DiscoveryService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(tags = "Tool Controller", description = "Defines tool operations")
 @RestController
 @RequestMapping("/v1/tools")
-public class ToolsController {
+public class ToolController {
 
     @Autowired
     private DiscoveryService discoveryService;
 
+    @ApiOperation("Get erueka services")
     @GetMapping("/eureka/services")
     public List<String> getEurekaServices() {
         return discoveryService.getEurekaServices();

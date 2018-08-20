@@ -1,5 +1,6 @@
 package com.gonwan.springcloud.organization.security;
 
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,11 +14,11 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers(HttpMethod.DELETE, "/v1/organizations/**")
-                .hasRole("ADMIN")
-                .anyRequest()
-                .authenticated();
+            .authorizeRequests()
+                .requestMatchers(EndpointRequest.to("info", "/v2/api-docs", "/swagger-ui.html")).permitAll()
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
+                .antMatchers("/v1/organizations/**").hasRole("USER")
+                .antMatchers(HttpMethod.DELETE, "/v1/organizations/**").hasRole("ADMIN");
     }
 
 }
