@@ -14,11 +14,11 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-        .authorizeRequests()
-            .requestMatchers(EndpointRequest.to("info", "/v1/tools/eureka/services", "/v2/api-docs", "/swagger-ui.html")).permitAll()
-            .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
-            .antMatchers("/v1/organizations/**").hasRole("USER")
-            .antMatchers(HttpMethod.DELETE, "/v1/organizations/**").hasRole("ADMIN");
+            .authorizeRequests()
+                .requestMatchers(EndpointRequest.to("info", "/v1/tools/eureka/services", "/v2/api-docs", "/swagger-ui.html")).permitAll()
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
+                .antMatchers(HttpMethod.DELETE, "/v1/organizations/**").hasRole("ADMIN")
+                .antMatchers("/v1/organizations/**").hasRole("USER");
     }
 
 }

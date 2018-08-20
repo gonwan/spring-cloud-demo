@@ -17,8 +17,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
             .authorizeRequests()
                 .requestMatchers(EndpointRequest.to("info", "/v2/api-docs", "/swagger-ui.html")).permitAll()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
-                .antMatchers("/v1/organizations/**").hasRole("USER")
-                .antMatchers(HttpMethod.DELETE, "/v1/organizations/**").hasRole("ADMIN");
+                .antMatchers(HttpMethod.DELETE, "/v1/organizations/**").hasRole("ADMIN")
+                .antMatchers("/v1/organizations/**").hasRole("USER");
     }
 
 }
