@@ -21,6 +21,17 @@ spring:
   redis:
     host: 192.168.11.234
     port: 6379
+  security:
+    user:
+      name: user
+      password: 123456
+      roles: ACTUATOR
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 logging:
   level:

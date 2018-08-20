@@ -31,6 +31,11 @@ spring:
   rabbitmq:
     host: 192.168.11.234
     port: 5672
+  security:
+    user:
+      name: user
+      password: 123456
+      roles: ACTUATOR
   cloud:
     stream:
       bindings:
@@ -48,6 +53,12 @@ spring:
     sender:
       # otherwise rabbit is used if available
       type: WEB
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 security:
   oauth2:

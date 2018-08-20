@@ -21,6 +21,17 @@ spring:
   redis:
     cluster:
       nodes: 172.16.87.12:6379
+  security:
+    user:
+      name: user
+      password: 123456
+      roles: ACTUATOR
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 logging:
   level:
