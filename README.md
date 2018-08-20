@@ -6,6 +6,8 @@ The demo project is initialized from [https://github.com/carnellj/spmia-chapter1
 - Switch from Postgres to MySQL, and from Kafka to RabbitMQ.
 - Easier local debugging by switching off service discovery and remote config file lookup.
 - Kubernetes support.
+- Swagger Integration.
+- Spring Boot Admin Integration.
 
 The project includes:
 - [eureka-server](eureka-server): Service for service discovery. Registered services are shown on its web frontend, running at 8761 port.
