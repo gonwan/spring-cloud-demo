@@ -20,7 +20,7 @@ public class ToolController {
     @Autowired
     private DiscoveryService discoveryService;
 
-    @ApiOperation("Get erueka services")
+    @ApiOperation("Get eureka services")
     @GetMapping("/eureka/services")
     public List<String> getEurekaServices() {
         return discoveryService.getEurekaServices();

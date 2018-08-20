@@ -4,6 +4,9 @@ server:
 eureka:
   instance:
     preferIpAddress: true
+    metadataMap:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
   client:
     registerWithEureka: true
     fetchRegistry: true
