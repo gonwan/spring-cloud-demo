@@ -21,6 +21,12 @@ spring:
       password: 123456
       roles: ACTUATOR
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 logging:
   level:
     com.netflix: WARN
