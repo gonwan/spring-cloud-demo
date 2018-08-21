@@ -98,3 +98,10 @@ redis-cli -h 172.16.87.12 -c del $(redis-cli -h 172.16.87.12 -c keys organizatio
 
 ### Working with OAuth2
 All OAuth2 tokens are cached in Redis, prefixed with `oauth2:`. There is also JWT token support. Comment/Uncomment `@Configuration` in `AuthorizationServerConfiguration` and `JwtAuthorizationServerConfiguration` classes to switch it on/off.
+
+### Swagger Integration
+The organization service and license service have Swagger integration. Access via `/swagger-ui.html`.
+
+### Spring Boot Admin Integration
+Spring Boot Admin is integrated into the eureka server. Access via: `http://${eureka-server}:8761/admin`.
+![zipkin-1](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/sba-1.png)
