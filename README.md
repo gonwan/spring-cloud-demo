@@ -63,7 +63,7 @@ Suppose you are using the kubernetes deployment.
 ### Get OAuth2 token
 `curl` is used here, and 31004 is the cluster-wide port of the Zuul gateway server:
 ```
-# curl -u eagleeye:thisissecret http://172.16.87.12:31004/api/auth/auth/oauth/token -X POST -d "grant_type=password&scope=webclient&username=user&password=password1"
+# curl -u eagleeye:thisissecret http://172.16.87.12:31004/api/auth/oauth/token -X POST -d "grant_type=password&scope=webclient&username=user&password=password1"
 {"access_token":"d3b817dc-fb7a-4e65-a080-d0e34c0dc4d5","token_type":"bearer","refresh_token":"a5d12d05-78ff-4170-ab4f-b9c4e9886358","expires_in":41496,"scope":"webclient"}
 ```
 ### Get organization info
