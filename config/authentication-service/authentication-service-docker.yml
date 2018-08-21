@@ -25,7 +25,7 @@ spring:
   security:
     user:
       name: user
-      password: 123456
+      password: password1
       roles: ACTUATOR
 
 management:

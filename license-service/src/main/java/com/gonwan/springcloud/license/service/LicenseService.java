@@ -93,7 +93,7 @@ public class LicenseService {
         License license = new License();
         license.setId("0000000-00-00000");
         license.setOrganizationId(organizationId);
-        license.setProductName("Sorry no licensing information currently available");
+        license.setProductName("Sorry no license information currently available");
         fallbackList.add(license);
         return fallbackList;
     }
