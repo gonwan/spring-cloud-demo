@@ -11,20 +11,24 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 
 /*
  * See: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-Security-2.0
+ * See: https://docs.spring.io/spring-security/site/docs/current/reference/html/jc.html#multiple-httpsecurity
  */
-@Configuration
 @Order(1)
+@Configuration
 class ActuatorWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
+            .requestMatchers()
+                .antMatchers("/actuator/**", "/v2/api-docs")
+                .and()
+            .authorizeRequests()
                 .requestMatchers(EndpointRequest.to("info", "health")).permitAll()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
                 .antMatchers("/v2/api-docs").permitAll()
                 .and()
-                .httpBasic();
+            .httpBasic();
     }
 
 }
