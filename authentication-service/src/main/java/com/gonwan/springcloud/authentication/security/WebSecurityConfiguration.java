@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,9 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /*
- * We do not have @EnableWebSecurity, so it is not applied automatically.
- * The main purpose is to expose beans.
+ * Config security and expose beans.
  */
+@Order(1)
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -41,17 +42,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+            .antMatcher("/actuator/**")
             .authorizeRequests()
+                .requestMatchers(EndpointRequest.to("info", "health")).permitAll()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
-                .antMatchers("/**").permitAll()
-            .and()
-                .httpBasic();
+                .and()
+            .httpBasic();
     }
 
     @Override /* for password grant */
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user").password(passwordEncoder.encode("password1")).roles("USER")
+        auth
+            .inMemoryAuthentication()
+                .withUser("user").password(passwordEncoder.encode("password1")).roles("USER", "ACTUATOR")
                 .and()
                 .withUser("admin").password(passwordEncoder.encode("password2")).roles("USER", "ADMIN");
     }

@@ -70,7 +70,7 @@ management:
 security:
   oauth2:
     resource:
-      userInfoUri: http://localhost:8901/auth/user
+      userInfoUri: http://localhost:8901/user
     client:
       clientId: eagleeye
 

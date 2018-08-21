@@ -1,7 +1,5 @@
 server:
   port: 8901
-  servlet:
-    contextPath: /auth
 
 eureka:
   instance:
@@ -35,4 +33,5 @@ logging:
   level:
     com.netflix: WARN
     org.springframework.web: WARN
+    #org.springframework.security: DEBUG
     com.gonwan.springcloud: DEBUG
