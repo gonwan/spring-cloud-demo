@@ -21,12 +21,12 @@ class ActuatorWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapt
     protected void configure(HttpSecurity http) throws Exception {
         http
             .requestMatchers()
-                .antMatchers("/actuator/**", "/v2/api-docs")
+                .antMatchers("/actuator/**", "/swagger*", "/swagger-resources/**", "/webjars/**", "/v2/**")
                 .and()
             .authorizeRequests()
                 .requestMatchers(EndpointRequest.to("info", "health")).permitAll()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
-                .antMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/swagger*", "/swagger-resources/**", "/webjars/**", "/v2/**").permitAll()
                 .and()
             .httpBasic();
     }
