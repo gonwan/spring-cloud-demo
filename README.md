@@ -104,4 +104,4 @@ The organization service and license service have Swagger integration. Access vi
 
 ### Spring Boot Admin Integration
 Spring Boot Admin is integrated into the eureka server. Access via: `http://${eureka-server}:8761/admin`.
-![zipkin-1](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/sba-1.png)
+![sba-1](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/sba-1.png)
