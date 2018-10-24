@@ -19,14 +19,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.14.RELEASE</version>
+        <version>1.5.17.RELEASE</version>
     </parent>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Edgware.SR4</version>
+                <version>Edgware.SR5</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
