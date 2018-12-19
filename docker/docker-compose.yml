@@ -20,6 +20,13 @@ services:
     ports:
     - "5672:5672"
     - "15672:15672"
+#  elasticsearch:
+#    image: elasticsearch:5-alpine
+#    ports:
+#    - "9200:9200"
+#    - "9300:9300"
+#    environment:
+#      discovery.type: single-node
   # zipkin docker images require manually create mysql schemes, just use the java version here.
   zipkin:
     image: gonwan/sc-zipkin-server:${BUILD_NAME}

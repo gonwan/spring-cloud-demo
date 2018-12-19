@@ -20,8 +20,8 @@ spring:
       allowOverride: true
       overrideSystemProperties: false
   redis:
-    cluster:
-      nodes: 172.16.87.12:6379
+    host: 10.228.129.235
+    port: 6379
   security:
     user:
       name: user
