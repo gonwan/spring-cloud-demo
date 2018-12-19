@@ -10,9 +10,9 @@ spring:
   datasource:
     initializationMode: ALWAYS
     schema: classpath:mysql.sql
-    url: "jdbc:mysql://10.228.129.235:3306/sc_database?useUnicode=true&characterEncoding=utf8"
-    username: "root"
-    password: "root"
+    url: "jdbc:mysql://192.168.11.234:3306/sc_database?useUnicode=true&characterEncoding=utf8"
+    username: "springcloud"
+    password: "sc_passw0rd"
     driverClassName: com.mysql.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
