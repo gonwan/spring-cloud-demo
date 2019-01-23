@@ -19,7 +19,7 @@ spring:
     url: "jdbc:mysql://192.168.11.234:3306/sc_database?useUnicode=true&characterEncoding=utf8"
     username: "springcloud"
     password: "{cipher}38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4"
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       minimumIdle: 1
@@ -50,9 +50,6 @@ spring:
             destination: sc.organization.change.topic
             contentType: application/json
             group: license.group
-    # Workaround circular reference: https://github.com/spring-projects/spring-boot/issues/13042
-    refresh:
-      refreshable: NONE
   sleuth:
     sampler:
       probability: 1.0
