@@ -1,6 +1,12 @@
 server:
   port: 9411
 
+management:
+  metrics:
+    web:
+      server:
+        autoTimeRequests: false
+
 # https://stackoverflow.com/questions/39174579/how-to-configure-spring-cloud-zipkin-server-with-mysql-for-persistence
 zipkin:
   storage:
@@ -13,17 +19,13 @@ spring:
     url: "jdbc:mysql://192.168.11.234:3306/sc_database?useUnicode=true&characterEncoding=utf8"
     username: "springcloud"
     password: "sc_passw0rd"
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       minimumIdle: 1
       maximumPoolSize: 2
       idleTimeout: 600000
       maxLifetime: 1800000
-  # Workaround circular reference: https://github.com/spring-projects/spring-boot/issues/13042
-  cloud:
-    refresh:
-      refreshable: NONE
 
 logging:
   level:
