@@ -1,0 +1,55 @@
+server:
+  port: 5555
+
+eureka:
+  instance:
+    preferIpAddress: true
+    metadataMap:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  security:
+    user:
+      name: actuator
+      password: actuator
+      roles: ACTUATOR
+  sleuth:
+    sampler:
+      probability: 0.0
+  zipkin:
+    sender:
+      # otherwise rabbit is used if available
+      type: WEB
+  cloud:
+    gateway:
+      routes:
+      - id: authentication-id
+        uri: lb://authentication-service
+        predicates:
+        - Path=/auth/**
+      - id: organization-id
+        uri: lb://organization-service
+        predicates:
+        - Path=/organization/**
+      - id: license-id
+        uri: lb://license-service
+        predicates:
+        - Path=/license/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.gonwan.springcloud: DEBUG
