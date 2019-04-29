@@ -24,8 +24,8 @@ spring:
     port: 6379
   security:
     user:
-      name: user
-      password: password1
+      name: actuator
+      password: actuator
       roles: ACTUATOR
 
 management:

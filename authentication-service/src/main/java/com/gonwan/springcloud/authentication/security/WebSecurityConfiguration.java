@@ -43,7 +43,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth
             .inMemoryAuthentication()
                 .withUser(user.getName())
-                .password(user.getPassword())
+                .password("{noop}" + user.getPassword())
                 .roles(StringUtils.toStringArray(roles));
     }
 

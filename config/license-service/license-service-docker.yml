@@ -37,8 +37,8 @@ spring:
     port: 5672
   security:
     user:
-      name: user
-      password: 123456
+      name: actuator
+      password: actuator
       roles: ACTUATOR
   cloud:
     config:

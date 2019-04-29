@@ -20,7 +20,7 @@ spring:
   security:
     user:
       name: actuator
-      password: "{noop}actuator"
+      password: actuator
       roles: ACTUATOR
 
 management:
