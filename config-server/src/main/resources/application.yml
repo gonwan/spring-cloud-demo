@@ -27,6 +27,7 @@ eureka:
 #          searchPaths: |
 #            config/zipkin-server,
 #            config/zuul-server,
+#            config/gateway-server,
 #            config/authentication-service,
 #            config/license-service,
 #            config/organization-service
@@ -43,12 +44,14 @@ spring:
           searchLocations: |
             classpath:config/zipkin-server,
             classpath:config/zuul-server,
+            classpath:config/gateway-server,
             classpath:config/authentication-service,
             classpath:config/license-service,
             classpath:config/organization-service
 #            # An extra `/` required under windows when using absolute paths
 #            file://${user.home}/Documents/github/restful/springcloud/config/zipkin-server,
 #            file://${user.home}/Documents/github/restful/springcloud/config/zuul-server,
+#            file://${user.home}/Documents/github/restful/springcloud/config/gateway-server,
 #            file://${user.home}/Documents/github/restful/springcloud/config/authentication-service,
 #            file://${user.home}/Documents/github/restful/springcloud/config/license-service,
 #            file://${user.home}/Documents/github/restful/springcloud/config/organization-service

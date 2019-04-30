@@ -21,12 +21,16 @@ spring:
       roles: ACTUATOR
   sleuth:
     sampler:
-      probability: 0.0
+      probability: 1.0
   zipkin:
     sender:
       # otherwise rabbit is used if available
       type: WEB
   cloud:
+    config:
+      # allow command line override
+      allowOverride: true
+      overrideSystemProperties: false
     gateway:
       # seems spring cloud gateway does not support a global context path like /api
       defaultFilters:
@@ -50,6 +54,15 @@ management:
     web:
       exposure:
         include: "*"
+
+zuul:
+  prefix: /api
+  sensitiveHeaders: Cookie,Set-Cookie
+  ignoredServices: "*"
+  routes:
+    authentication-service: /auth/**
+    organization-service: /organization/**
+    license-service: /license/**
 
 logging:
   level:
