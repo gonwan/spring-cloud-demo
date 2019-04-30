@@ -27,7 +27,7 @@ spring:
       idleTimeout: 600000
       maxLifetime: 1800000
   rabbitmq:
-    host: 172.16.87.12
+    host: 127.0.0.1
     port: 5672
   security:
     user:

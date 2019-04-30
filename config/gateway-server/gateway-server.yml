@@ -55,15 +55,6 @@ management:
       exposure:
         include: "*"
 
-zuul:
-  prefix: /api
-  sensitiveHeaders: Cookie,Set-Cookie
-  ignoredServices: "*"
-  routes:
-    authentication-service: /auth/**
-    organization-service: /organization/**
-    license-service: /license/**
-
 logging:
   level:
     com.netflix: WARN
