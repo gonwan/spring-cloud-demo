@@ -28,6 +28,8 @@ spring:
       type: WEB
   cloud:
     gateway:
+      default-filters:
+      - StripPrefix=1
       routes:
       - id: authentication-id
         uri: lb://authentication-service
@@ -53,3 +55,6 @@ logging:
     com.netflix: WARN
     org.springframework.web: WARN
     com.gonwan.springcloud: DEBUG
+    #org.springframework.cloud.gateway: TRACE
+    #org.springframework.http.server.reactive: DEBUG
+    #org.springframework.web.reactive: DEBUG
