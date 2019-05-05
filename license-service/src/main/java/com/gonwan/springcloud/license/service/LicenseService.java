@@ -47,7 +47,17 @@ public class LicenseService {
         return license;
     }
 
-    @HystrixCommand
+    @HystrixCommand(
+            commandProperties = {
+                    /*
+                     * @HystrixCommand by default runs in a different thread to the caller, fixes warning:
+                     * - Error creating bean with name 'scopedTarget.oauth2ClientContext': Scope 'session' is not active
+                     *   for the current thread; consider defining a scoped proxy for this bean if you intend to refer to
+                     *   it from a singleton.
+                     */
+                    @HystrixProperty(name = HystrixPropertiesManager.EXECUTION_ISOLATION_STRATEGY, value = "SEMAPHORE")
+            }
+    )
     private Organization getOrganization(String organizationId) {
         return organizationRestClient.getOrganization(organizationId);
     }

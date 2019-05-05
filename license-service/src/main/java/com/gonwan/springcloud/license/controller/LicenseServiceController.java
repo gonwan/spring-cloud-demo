@@ -59,7 +59,7 @@ public class LicenseServiceController {
 
     /*
      * # curl -H "Authorization: Bearer 67cded20-2433-4b51-887e-6cfb16561cd5" -H "Content-Type: application/json" http://localhost:8080/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses \
-     *        -X POST -d '{ "productName": "productName1", "licenseType": "licenseType1", "licenseMax": 200, "licenseAllocated": 10 }'
+     *        -X POST -d '{ "organizationId": "e254f8c-c442-4ebe-a82a-e2fc1d1ff78a", "productName": "productName1", "licenseType": "licenseType1", "licenseMax": 200, "licenseAllocated": 10 }'
      */
     @ApiOperation("Save license")
     @ApiImplicitParams({
@@ -72,7 +72,7 @@ public class LicenseServiceController {
 
     /*
      * # curl -H "Authorization: Bearer 67cded20-2433-4b51-887e-6cfb16561cd5" -H "Content-Type: application/json" http://localhost:8080/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses/0c107783-ba3d-44b0-8a25-40c095712b2c \
-     *        -X PUT -d '{ "productName": "productName2", "licenseType": "licenseType2", "licenseMax": 200, "licenseAllocated": 10 }'
+     *        -X PUT -d '{ "organizationId": "e254f8c-c442-4ebe-a82a-e2fc1d1ff78a", "productName": "productName2", "licenseType": "licenseType2", "licenseMax": 200, "licenseAllocated": 10 }'
      */
     @ApiOperation("Update license")
     @ApiImplicitParams({
