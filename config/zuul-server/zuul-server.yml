@@ -43,9 +43,15 @@ zuul:
   sensitiveHeaders: Cookie,Set-Cookie
   ignoredServices: "*"
   routes:
-    authentication-service: /auth/**
-    organization-service: /organization/**
-    license-service: /license/**
+    authentication-service:
+      path: /auth/**
+      url: http://localhost:8901
+    organization-service:
+      path: /organization/**
+      url: http://localhost:8085
+    license-service:
+      path: /license/**
+      url: http://localhost:8080
 
 logging:
   level:

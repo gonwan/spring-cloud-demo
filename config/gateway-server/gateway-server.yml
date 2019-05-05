@@ -37,15 +37,15 @@ spring:
       - StripPrefix=2
       routes:
       - id: authentication-id
-        uri: lb://authentication-service
+        uri: http://localhost:8901
         predicates:
         - Path=/api/auth/**
       - id: organization-id
-        uri: lb://organization-service
+        uri: http://localhost:8085
         predicates:
         - Path=/api/organization/**
       - id: license-id
-        uri: lb://license-service
+        uri: http://localhost:8080
         predicates:
         - Path=/api/license/**
 
