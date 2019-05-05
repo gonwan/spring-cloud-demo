@@ -79,8 +79,8 @@ services:
       #   sc_passw0rd
       ENCRYPT_KEY: "IMSYMMETRIC"
   gateway-server:
-    image: gonwan/sc-zuul-server:${BUILD_NAME}
-    #image: gonwan/sc-gateway-server:${BUILD_NAME}
+    #image: gonwan/sc-zuul-server:${BUILD_NAME}
+    image: gonwan/sc-gateway-server:${BUILD_NAME}
     ports:
     - "5555:5555"
     environment:

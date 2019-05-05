@@ -78,4 +78,5 @@ logging:
     com.gonwan.springcloud: DEBUG
 
 application:
+  #organizationUrl: http://zuul-server/api/organization
   organizationUrl: http://gateway-server/api/organization

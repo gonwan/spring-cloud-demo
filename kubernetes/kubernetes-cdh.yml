@@ -13,8 +13,8 @@
 # # docker push 192.168.11.235:5000/gonwan/sc-config-server:2.0.0
 # # docker image tag gonwan/sc-zipkin-server:2.0.0 192.168.11.235:5000/gonwan/sc-zipkin-server:2.0.0
 # # docker push 192.168.11.235:5000/gonwan/sc-zipkin-server:2.0.0
-# # docker image tag gonwan/sc-zuul-server:2.0.0 192.168.11.235:5000/gonwan/sc-zuul-server:2.0.0
-# # docker push 192.168.11.235:5000/gonwan/sc-zuul-server:2.0.0
+# # docker image tag gonwan/sc-gateway-server:2.0.0 192.168.11.235:5000/gonwan/sc-gateway-server:2.0.0
+# # docker push 192.168.11.235:5000/gonwan/sc-gateway-server:2.0.0
 # # docker image tag gonwan/sc-authentication-service:2.0.0 192.168.11.235:5000/gonwan/sc-authentication-service:2.0.0
 # # docker push 192.168.11.235:5000/gonwan/sc-authentication-service:2.0.0
 # # docker image tag gonwan/sc-organization-service:2.0.0 192.168.11.235:5000/gonwan/sc-organization-service:2.0.0
@@ -155,15 +155,15 @@ spec:
         - name: ENCRYPT_KEY
           value: "IMSYMMETRIC"
 
-# zuul-server
+# gateway-server
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: zuul-server
+  name: gateway-server
 spec:
   selector:
-    app: zuul-server
+    app: gateway-server
   type: NodePort
   ports:
   - port: 5555
@@ -172,20 +172,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: zuul-server
+  name: gateway-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: zuul-server
+      app: gateway-server
   template:
     metadata:
       labels:
-        app: zuul-server
+        app: gateway-server
     spec:
       containers:
-      - name: zuul-server
-        image: 172.16.87.12:5000/gonwan/sc-zuul-server:2.0.0
+      - name: gateway-server
+        image: 172.16.87.12:5000/gonwan/sc-gateway-server:2.0.0
         ports:
         - containerPort: 5555
         env:
