@@ -78,8 +78,9 @@ services:
       # curl http://localhost:8888/decrypt -X POST -d '38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4'
       #   sc_passw0rd
       ENCRYPT_KEY: "IMSYMMETRIC"
-  zuul-server:
+  gateway-server:
     image: gonwan/sc-zuul-server:${BUILD_NAME}
+    #image: gonwan/sc-gateway-server:${BUILD_NAME}
     ports:
     - "5555:5555"
     environment:
