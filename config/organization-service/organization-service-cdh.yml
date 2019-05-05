@@ -27,7 +27,8 @@ spring:
       idleTimeout: 600000
       maxLifetime: 1800000
   rabbitmq:
-    host: 127.0.0.1
+    # virtual box
+    host: 10.0.2.15
     port: 5672
   security:
     user:

@@ -54,6 +54,7 @@ public class LicenseService {
                      * - Error creating bean with name 'scopedTarget.oauth2ClientContext': Scope 'session' is not active
                      *   for the current thread; consider defining a scoped proxy for this bean if you intend to refer to
                      *   it from a singleton.
+                     * See: https://github.com/spring-projects/spring-boot/issues/5503
                      */
                     @HystrixProperty(name = HystrixPropertiesManager.EXECUTION_ISOLATION_STRATEGY, value = "SEMAPHORE")
             }
