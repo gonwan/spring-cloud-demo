@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:8-jre-alpine
 RUN apk update && apk upgrade && apk add netcat-openbsd
 RUN mkdir -p /usr/local/authentication-service
 ADD @project.build.finalName@.jar /usr/local/authentication-service/
