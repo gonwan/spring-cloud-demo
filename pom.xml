@@ -15,8 +15,8 @@
         <module>zuul-server</module>
         <module>gateway-server</module>
         <module>authentication-service</module>
-        <module>license-service</module>
         <module>organization-service</module>
+        <module>license-service</module>
     </modules>
     <repositories>
         <repository>
