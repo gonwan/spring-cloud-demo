@@ -110,5 +110,7 @@ Spring Boot Admin is integrated into the eureka server. Access via: `http://${eu
 
 ### Prometheus & Grafana Integration
 Spring Boot 2.0 added support for using [Micrometer](https://github.com/micrometer-metrics/micrometer) as the metrics collection facility. Prometheus is chosen to be the metrics registry, running at 9090 port. And Grafana is used to do query and visualization, running at 3000 port.
+
+Grafana dashboards imported here are [4701](https://grafana.com/dashboards/4701) & [5373](https://grafana.com/dashboards/5373):
 ![grafana-1](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/grafana-1.png)
 ![grafana-2](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/grafana-2.png)
