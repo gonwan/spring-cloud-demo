@@ -6,8 +6,9 @@ The demo project is initialized from [https://github.com/carnellj/spmia-chapter1
 - Switch from Postgres to MySQL, and from Kafka to RabbitMQ.
 - Easier local debugging by switching off service discovery and remote config file lookup.
 - Kubernetes support.
-- Swagger Integration.
-- Spring Boot Admin Integration.
+- Swagger integration.
+- Spring Boot Admin integration.
+- Prometheus & Grafana integration.
 
 The project includes:
 - [eureka-server](eureka-server): Service for service discovery. Registered services are shown on its web frontend, running at 8761 port.
@@ -106,3 +107,8 @@ The organization service and license service have Swagger integration. Access vi
 ### Spring Boot Admin Integration
 Spring Boot Admin is integrated into the eureka server. Access via: `http://${eureka-server}:8761/admin`.
 ![sba-1](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/sba-1.png)
+
+### Prometheus & Grafana Integration
+Spring Boot 2.0 added support for using [Micrometer](https://github.com/micrometer-metrics/micrometer) as the metrics collection facility. Prometheus is chosen to be the metrics registry, running at 9090 port. And Grafana is used to do query and visualization, running at 3000 port.
+![grafana-1](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/grafana-1.png)
+![grafana-2](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/grafana-2.png)
