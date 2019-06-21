@@ -11,7 +11,7 @@ scrape_configs:
   - targets: [ 'organization-service:8085' ]
     labels:
       application: organization-app
-      instance: organization-svc1
+      instance: organization-svc
   basic_auth:
     username: actuator
     password: actuator
