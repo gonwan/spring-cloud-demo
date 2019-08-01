@@ -93,7 +93,7 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
-        endpoints.tokenStore(jwtTokenStore)  /* or use a redis store?? */
+        endpoints.tokenStore(jwtTokenStore)  /* no need for external persistence, since jwt token contains all authentication info after decoding. */
                 .tokenEnhancer(tokenEnhancerChain)
                 .authenticationManager(authenticationManager())
                 .userDetailsService(userDetailsService());
