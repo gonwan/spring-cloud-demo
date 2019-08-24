@@ -36,7 +36,7 @@ public class LicenseServiceController {
      * # curl -H "Authorization: Bearer 67cded20-2433-4b51-887e-6cfb16561cd5" http://localhost:8080/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses
      */
     @ApiOperation("Get licenses by organization ID")
-    @ApiImplicitParam(name = "Authorization", value = "token", dataType = "string", paramType = "header")
+    @ApiImplicitParam(name = "Authorization", value = "Bearer <access_token>", dataType = "string", paramType = "header", required = true)
     @GetMapping
     public List<License> getLicenses(@PathVariable("organizationId") String organizationId) {
         return licenseService.getLicenses(organizationId);
@@ -46,7 +46,7 @@ public class LicenseServiceController {
      * # curl -H "Authorization: Bearer 67cded20-2433-4b51-887e-6cfb16561cd5" http://localhost:8080/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses/f3831f8c-c338-4ebe-a82a-e2fc1d1ff78a
      */
     @ApiOperation("Get license by organization ID and license ID")
-    @ApiImplicitParam(name = "Authorization", value = "token", dataType = "string", paramType = "header")
+    @ApiImplicitParam(name = "Authorization", value = "Bearer <access_token>", dataType = "string", paramType = "header", required = true)
     @GetMapping("/{licenseId}")
     public License getLicense(@PathVariable("organizationId") String organizationId, @PathVariable("licenseId") String licenseId) {
         return licenseService.getLicense(organizationId, licenseId);
@@ -57,7 +57,7 @@ public class LicenseServiceController {
      *        -X POST -d '{ "organizationId": "e254f8c-c442-4ebe-a82a-e2fc1d1ff78a", "productName": "productName1", "licenseType": "licenseType1", "licenseMax": 200, "licenseAllocated": 10 }'
      */
     @ApiOperation("Save license")
-    @ApiImplicitParam(name = "Authorization", value = "token", dataType = "string", paramType = "header")
+    @ApiImplicitParam(name = "Authorization", value = "Bearer <access_token>", dataType = "string", paramType = "header", required = true)
     @PostMapping
     public void saveLicense(@RequestBody License license) {
         licenseService.saveLicense(license);
@@ -68,7 +68,7 @@ public class LicenseServiceController {
      *        -X PUT -d '{ "organizationId": "e254f8c-c442-4ebe-a82a-e2fc1d1ff78a", "productName": "productName2", "licenseType": "licenseType2", "licenseMax": 200, "licenseAllocated": 10 }'
      */
     @ApiOperation("Update license")
-    @ApiImplicitParam(name = "Authorization", value = "token", dataType = "string", paramType = "header")
+    @ApiImplicitParam(name = "Authorization", value = "Bearer <access_token>", dataType = "string", paramType = "header", required = true)
     @PutMapping("/{licenseId}")
     public void updateLicense(@PathVariable("licenseId") String licenseId, @RequestBody License license) {
         licenseService.updateLicense(licenseId, license);
@@ -78,7 +78,7 @@ public class LicenseServiceController {
      * # curl -H "Authorization: Bearer 67cded20-2433-4b51-887e-6cfb16561cd5" -H "Content-Type: application/json" http://localhost:8080/v1/organizations/4479bbed-8a3d-42f1-99d6-1c0c747dc381/licenses/a9f3bf65-8d30-416c-a6bd-86863eab44d6 -X DELETE
      */
     @ApiOperation("Delete license")
-    @ApiImplicitParam(name = "Authorization", value = "token", dataType = "string", paramType = "header")
+    @ApiImplicitParam(name = "Authorization", value = "Bearer <access_token>", dataType = "string", paramType = "header", required = true)
     @DeleteMapping("/{licenseId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLicense(@PathVariable("licenseId") String licenseId) {

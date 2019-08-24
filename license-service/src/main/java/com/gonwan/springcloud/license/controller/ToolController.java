@@ -22,7 +22,7 @@ public class ToolController {
     private DiscoveryService discoveryService;
 
     @ApiOperation("Get eureka services")
-    @ApiImplicitParam(name = "Authorization", value = "token", dataType = "string", paramType = "header")
+    @ApiImplicitParam(name = "Authorization", value = "Bearer <access_token>", dataType = "string", paramType = "header", required = true)
     @GetMapping("/eureka/services")
     public List<String> getEurekaServices() {
         return discoveryService.getEurekaServices();
