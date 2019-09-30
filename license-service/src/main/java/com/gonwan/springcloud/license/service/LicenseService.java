@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,6 @@ import com.gonwan.springcloud.license.client.OrganizationRestTemplateClient;
 import com.gonwan.springcloud.license.model.License;
 import com.gonwan.springcloud.license.model.LicenseRepository;
 import com.gonwan.springcloud.license.model.Organization;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
-import com.netflix.hystrix.contrib.javanica.conf.HystrixPropertiesManager;
 
 @Service
 public class LicenseService {
@@ -47,59 +45,43 @@ public class LicenseService {
         return license;
     }
 
-    @HystrixCommand(
-            commandProperties = {
-                    /*
-                     * @HystrixCommand by default runs in a different thread to the caller, fixes warning:
-                     * - Error creating bean with name 'scopedTarget.oauth2ClientContext': Scope 'session' is not active
-                     *   for the current thread; consider defining a scoped proxy for this bean if you intend to refer to
-                     *   it from a singleton.
-                     * See: https://github.com/spring-projects/spring-boot/issues/5503
-                     */
-                    @HystrixProperty(name = HystrixPropertiesManager.EXECUTION_ISOLATION_STRATEGY, value = "SEMAPHORE")
-            }
-    )
+    @CircuitBreaker(name = "lsGetOrganization")
     private Organization getOrganization(String organizationId) {
         return organizationRestClient.getOrganization(organizationId);
     }
 
-    private void randomLongRun() {
+    private void randomRun() {
         Random rand = new Random();
-        int randomNum = rand.nextInt((3 - 1) + 1) + 1;
-        if (randomNum == 3) {
-            sleep();
+        int r = rand.nextInt(4);
+        switch (r) {
+            case 0:
+                break;
+            case 1:
+                throw new IllegalArgumentException("Random thrown exception");
+            case 2:
+            case 3:
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    /* ignore */
+                }
+                break;
         }
     }
 
-    private void sleep() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            /* ignore */
-        }
-    }
-
-    @HystrixCommand(fallbackMethod = "buildFallbackLicenseList",
-            threadPoolKey = "licenseByOrgThreadPool",
-            threadPoolProperties = {
-                    @HystrixProperty(name = HystrixPropertiesManager.CORE_SIZE, value = "10"),
-                    @HystrixProperty(name = HystrixPropertiesManager.MAX_QUEUE_SIZE, value = "30")
-            },
-            commandProperties = {
-                    @HystrixProperty(name = HystrixPropertiesManager.CIRCUIT_BREAKER_REQUEST_VOLUME_THRESHOLD, value = "10"),
-                    @HystrixProperty(name = HystrixPropertiesManager.CIRCUIT_BREAKER_SLEEP_WINDOW_IN_MILLISECONDS, value = "7000"),
-                    @HystrixProperty(name = HystrixPropertiesManager.CIRCUIT_BREAKER_ERROR_THRESHOLD_PERCENTAGE, value = "75"),
-                    @HystrixProperty(name = HystrixPropertiesManager.METRICS_ROLLING_STATS_NUM_BUCKETS, value = "5"),
-                    @HystrixProperty(name = HystrixPropertiesManager.METRICS_ROLLING_STATS_TIME_IN_MILLISECONDS, value = "15000")
-            }
-    )
+    @CircuitBreaker(name = "lsGetLicenses", fallbackMethod = "buildFallbackLicenseList")
     public List<License> getLicenses(String organizationId) {
-        randomLongRun();
+        randomRun();
         return licenseRepository.findByOrganizationId(organizationId);
     }
 
+    /*
+     * CallNotPermittedException is not handled and will be returned to client.
+     * io.github.resilience4j.circuitbreaker: DEBUG
+     */
     @SuppressWarnings("unused")
-    private List<License> buildFallbackLicenseList(String organizationId) {
+    private List<License> buildFallbackLicenseList(String organizationId, IllegalArgumentException e) {
+        logger.warn("Got exception in fallback: {}", e.getMessage());
         List<License> fallbackList = new ArrayList<>();
         License license = new License();
         license.setId("0000000-00-00000");

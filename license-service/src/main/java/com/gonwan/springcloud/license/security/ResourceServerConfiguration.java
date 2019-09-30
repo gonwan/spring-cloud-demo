@@ -26,7 +26,6 @@ class ActuatorWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapt
             .authorizeRequests()
                 .requestMatchers(EndpointRequest.to("info", "health")).permitAll()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
-                .antMatchers("/swagger*", "/swagger-resources/**", "/webjars/**", "/v2/**").permitAll()
                 .and()
             .httpBasic();
     }
