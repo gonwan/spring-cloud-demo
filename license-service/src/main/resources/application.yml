@@ -103,3 +103,12 @@ resilience4j.circuitbreaker:
       slowCallRateThreshold: 40
       slowCallDurationThreshold: 2s
       eventConsumerBufferSize: 10
+
+resilience4j.ratelimiter:
+  instances:
+    lsGetLicense:
+      registerHealthIndicator: true
+      limitForPeriod: 2
+      limitRefreshPeriod: 10s
+      timeoutDuration: 1s
+      eventConsumerBufferSize: 10

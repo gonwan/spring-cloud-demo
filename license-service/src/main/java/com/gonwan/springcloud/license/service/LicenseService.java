@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,14 @@ public class LicenseService {
     @Autowired
     private OrganizationRestTemplateClient organizationRestClient;
 
+    @RateLimiter(name = "lsGetLicense")
     public License getLicense(String organizationId, String licenseId) {
         License license = licenseRepository.findByIdAndOrganizationId(licenseId, organizationId);
         if (license == null) {
             logger.debug("Cannot find license with id: {}", licenseId);
             return null;
         }
-        Organization org = getOrganization(organizationId);
+        Organization org = organizationRestClient.getOrganization(organizationId);
         if (org == null) {
             logger.debug("Cannot find organization with id: {}", organizationId);
         } else {
@@ -43,11 +45,6 @@ public class LicenseService {
             license.setContactPhone(org.getContactPhone());
         }
         return license;
-    }
-
-    @CircuitBreaker(name = "lsGetOrganization")
-    private Organization getOrganization(String organizationId) {
-        return organizationRestClient.getOrganization(organizationId);
     }
 
     private void randomRun() {
