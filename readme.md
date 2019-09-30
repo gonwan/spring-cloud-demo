@@ -3,8 +3,10 @@ The demo project is initialized from [https://github.com/carnellj/spmia-chapter1
 - Code cleanup, bug fix, and better comments.
 - Java 9+ support.
 - Spring Boot 2.0 migration.
-- Switch from Postgres to MySQL, and from Kafka to RabbitMQ.
 - Easier local debugging by switching off service discovery and remote config file lookup.
+- Switch from Postgres to MySQL, and from Kafka to RabbitMQ.
+- Switch from Netflix [Hystrix](https://github.com/Netflix/hystrix) to [Resilience4j](https://github.com/resilience4j/resilience4j).
+- Provide [spring-cloud-gateway](https://github.com/spring-cloud/spring-cloud-gateway/) API gateway, as well as Netflix [Zuul](https://github.com/Netflix/zuul).
 - Kubernetes support.
 - Swagger integration.
 - Spring Boot Admin integration.
@@ -58,6 +60,9 @@ NOTE: Kubernetes does not support environment variable substitution by default.
 ```
 kubectl create -f kubernetes/kubernetes.yml
 ```
+
+# Running Locally
+Minimum deployment includes: authentication-service, organization-service & license-service. Just launch them in your favorite IDE.
 
 # Use Cases
 Suppose you are using the kubernetes deployment.

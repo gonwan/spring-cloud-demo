@@ -90,3 +90,21 @@ logging:
 application:
   #organizationUrl: http://zuul-server/api/organization
   organizationUrl: http://gateway-server/api/organization
+
+resilience4j.circuitbreaker:
+  instances:
+    lsGetOrganization:
+      registerHealthIndicator: true
+      slidingWindowType: TIME_BASED
+      slidingWindowSize: 60
+    lsGetLicenses:
+      registerHealthIndicator: true
+      slidingWindowType: TIME_BASED
+      slidingWindowSize: 60
+      minimumNumberOfCalls: 5
+      permittedNumberOfCallsInHalfOpenState: 1
+      waitDurationInOpenState: 60s
+      failureRateThreshold: 20
+      slowCallRateThreshold: 40
+      slowCallDurationThreshold: 2s
+      eventConsumerBufferSize: 10
