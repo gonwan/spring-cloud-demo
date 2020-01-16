@@ -28,6 +28,8 @@ public class LicenseService {
     @Autowired
     private OrganizationRestTemplateClient organizationRestClient;
 
+    private Random rand = new Random();
+
     @RateLimiter(name = "lsGetLicense")
     public License getLicense(String organizationId, String licenseId) {
         License license = licenseRepository.findByIdAndOrganizationId(licenseId, organizationId);
@@ -48,7 +50,6 @@ public class LicenseService {
     }
 
     private void randomRun() {
-        Random rand = new Random();
         int r = rand.nextInt(4);
         switch (r) {
             case 0:
@@ -60,7 +61,7 @@ public class LicenseService {
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
-                    /* ignore */
+                    Thread.currentThread().interrupt();
                 }
                 break;
         }
