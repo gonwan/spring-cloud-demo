@@ -33,7 +33,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableCaching
-@EnableOAuth2Client  /* Also see: UserInfoTokenServices, access token + client id --> user authentication. */
 public class LicenseApplication {
 
     @Bean

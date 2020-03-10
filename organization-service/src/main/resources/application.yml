@@ -43,7 +43,7 @@ spring:
             userInfoUri: http://localhost:8901/user
         registration:
           sc-provider:
-            cliendId: eagleeye
+            clientId: eagleeye
             clientSecret: thisissecret
             authorizationGrantType: client_credentials,password,refresh_token
   cloud:
@@ -86,3 +86,4 @@ logging:
     com.netflix: WARN
     org.springframework.web: WARN
     com.gonwan.springcloud: DEBUG
+    org.springframework.security: DEBUG
