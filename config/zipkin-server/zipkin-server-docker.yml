@@ -1,11 +1,6 @@
-server:
-  port: 9411
-
-management:
-  metrics:
-    web:
-      server:
-        autoTimeRequests: false
+armeria:
+  ports:
+  - port: 9411
 
 # https://stackoverflow.com/questions/39174579/how-to-configure-spring-cloud-zipkin-server-with-mysql-for-persistence
 zipkin:
@@ -21,6 +16,7 @@ spring:
     initializationMode: ALWAYS
     schema: classpath:mysql.sql
     url: "jdbc:mysql://mysql:3306/sc_database?useUnicode=true&characterEncoding=utf8&autoReconnect=true&maxReconnects=3"
+    jdbcUrl: ${spring.datasource.url}
     username: "springcloud"
     password: "{cipher}38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4"
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -31,6 +27,16 @@ spring:
       idleTimeout: 600000
       maxLifetime: 1800000
       #connectionTimeout: 30000  # overall connection timeout = connectionTimeout * maxReconnects, see DriverManager#setLoginTimeout().
+  main:
+    allowBeanDefinitionOverriding: true
+
+management:
+  metrics:
+    web:
+      server:
+        request:
+          autotime:
+            enabled: false
 
 logging:
   level:

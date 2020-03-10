@@ -35,25 +35,23 @@
     </dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>io.zipkin.java</groupId>
+            <groupId>io.zipkin</groupId>
             <artifactId>zipkin-server</artifactId>
-            <version>2.11.12</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-log4j2</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>2.19.2</version>
         </dependency>
         <dependency>
-            <groupId>io.zipkin.java</groupId>
-            <artifactId>zipkin-autoconfigure-storage-mysql</artifactId>
-            <version>2.11.12</version>
+            <groupId>io.zipkin.zipkin2</groupId>
+            <artifactId>zipkin-storage-mysql-v1</artifactId>
+            <version>2.19.2</version>
         </dependency>
         <dependency>
-            <groupId>io.zipkin.java</groupId>
-            <artifactId>zipkin-autoconfigure-ui</artifactId>
-            <version>2.11.12</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin</groupId>
+            <artifactId>zipkin-lens</artifactId>
+            <version>2.19.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
