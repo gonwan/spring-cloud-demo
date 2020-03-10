@@ -58,8 +58,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers(HttpMethod.DELETE, "/v1/organizations/**").hasRole("ADMIN")
-                .anyRequest().authenticated();
-        http
+                .antMatchers("/v1/organizations/**").hasRole("USER")
+                .and()
             .oauth2ResourceServer().opaqueToken();
     }
 
