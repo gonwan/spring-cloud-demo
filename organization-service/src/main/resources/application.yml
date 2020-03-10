@@ -76,14 +76,9 @@ management:
       sla:
         http.server.requests: 10ms, 20ms, 100ms, 1000ms
 
-security:
-  oauth2:
-    resource:
-      userInfoUri: http://localhost:8901/user
-
 logging:
   level:
     com.netflix: WARN
     org.springframework.web: WARN
+    #org.springframework.security: DEBUG
     com.gonwan.springcloud: DEBUG
-    org.springframework.security: DEBUG

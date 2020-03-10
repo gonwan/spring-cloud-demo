@@ -34,6 +34,18 @@ spring:
       name: actuator
       password: actuator
       roles: ACTUATOR
+    oauth2:
+      client:
+        provider:
+          sc-provider:
+            # align with the attribute name in authentication service
+            userNameAttribute: username
+            userInfoUri: http://localhost:8901/user
+        registration:
+          sc-provider:
+            clientId: eagleeye
+            clientSecret: thisissecret
+            authorizationGrantType: client_credentials,password,refresh_token
   cloud:
     config:
       # allow command line override
@@ -67,11 +79,6 @@ management:
         http.server.requests: true
       sla:
         http.server.requests: 10ms, 20ms, 100ms, 1000ms
-
-security:
-  oauth2:
-    resource:
-      userInfoUri: http://localhost:8901/user
 
 logging:
   level:

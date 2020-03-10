@@ -29,5 +29,5 @@ java -Djava.security.egd=file:/dev/./urandom -Dserver.port=$SERVER_PORT     \
      -Dspring.cloud.config.uri=$CONFIG_SERVER_URI                           \
      -Dspring.profiles.active=$PROFILE                                      \
      -Dspring.zipkin.baseUrl=$ZIPKIN_URI                                    \
-     -Dsecurity.oauth2.resource.userInfoUri=$AUTH_SERVICE_URI               \
+     -Dspring.security.oauth2.client.provider.sc-provider.userInfoUri=$AUTH_SERVICE_URI       \
      -jar /usr/local/organization-service/@project.build.finalName@.jar
