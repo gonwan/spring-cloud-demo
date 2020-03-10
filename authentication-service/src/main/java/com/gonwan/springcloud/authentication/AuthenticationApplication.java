@@ -31,6 +31,7 @@ public class AuthenticationApplication {
     public Map<String, Object> user(OAuth2Authentication user) {
         Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("user", user.getPrincipal());
+        userInfo.put("username", user.getName());
         userInfo.put("authorities", AuthorityUtils.authorityListToSet(user.getAuthorities()));
         return userInfo;
     }
