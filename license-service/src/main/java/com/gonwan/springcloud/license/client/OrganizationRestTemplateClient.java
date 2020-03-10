@@ -26,7 +26,7 @@ public class OrganizationRestTemplateClient {
 
     /*
      * Zuul adds correlationId, so go through it.
-     * # curl -u eagleeye:thisissecret http://localhost:5555/api/auth/auth/oauth/token -X POST -d "grant_type=password&scope=webclient&username=user&password=password1"
+     * # curl -u eagleeye:thisissecret http://localhost:5555/api/auth/oauth/token -X POST -d "grant_type=password&scope=webclient&username=user&password=password1"
      * # curl -H "Authorization: Bearer 7559c856-4232-44c6-b85e-3b1a0f75bbe3" http://localhost:5555/api/license/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses/f3831f8c-c338-4ebe-a82a-e2fc1d1ff78a
      */
     @Cacheable(key = "#organizationId", value = "organizations")
