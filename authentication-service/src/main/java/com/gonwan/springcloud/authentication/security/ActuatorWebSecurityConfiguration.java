@@ -17,7 +17,7 @@ import org.springframework.util.StringUtils;
  */
 @Order(1)
 @Configuration
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class ActuatorWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private SecurityProperties securityProperties;
@@ -27,13 +27,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        List<String> roles = securityProperties.getUser().getRoles();
+        String role = roles.isEmpty() ? "ACTUATOR" : roles.get(0);
         http
-            .antMatcher("/actuator/**")
-                .authorizeRequests()
-                    .requestMatchers(EndpointRequest.to("info", "health")).permitAll()
-                    .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
-                    .and()
-                .httpBasic();
+            .requestMatcher(EndpointRequest.toAnyEndpoint())
+            .authorizeRequests()
+                .requestMatchers(EndpointRequest.to("info", "health")).permitAll()
+                .anyRequest().hasRole(role)
+                .and()
+            .httpBasic();
     }
 
     @Override
