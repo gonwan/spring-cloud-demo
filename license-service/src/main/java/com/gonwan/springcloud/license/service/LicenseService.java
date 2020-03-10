@@ -5,17 +5,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gonwan.springcloud.license.client.OrganizationRestTemplateClient;
+import com.gonwan.springcloud.license.client.OrganizationWebClient;
 import com.gonwan.springcloud.license.model.License;
 import com.gonwan.springcloud.license.model.LicenseRepository;
 import com.gonwan.springcloud.license.model.Organization;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 
 @Service
 public class LicenseService {
@@ -26,7 +27,7 @@ public class LicenseService {
     private LicenseRepository licenseRepository;
 
     @Autowired
-    private OrganizationRestTemplateClient organizationRestClient;
+    private OrganizationWebClient organizationClient;
 
     private Random rand = new Random();
 
@@ -37,7 +38,7 @@ public class LicenseService {
             logger.debug("Cannot find license with id: {}", licenseId);
             return null;
         }
-        Organization org = organizationRestClient.getOrganization(organizationId);
+        Organization org = organizationClient.getOrganization(organizationId);
         if (org == null) {
             logger.debug("Cannot find organization with id: {}", organizationId);
         } else {

@@ -15,12 +15,16 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
-import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.web.context.request.RequestContextListener;
+import org.springframework.web.reactive.function.client.WebClient;
+
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -59,21 +63,41 @@ public class LicenseApplication {
         return new RequestContextListener();
     }
 
-   /*
-    * See: OAuth2RestOperationsConfiguration.SessionScopedConfiguration#oauth2ClientContext().
-    *      OAuth2ProtectedResourceDetailsConfiguration#oauth2RemoteResource(), OAuth2RestTemplate only uses clientId.
-    */
+    @Bean
+    public OAuth2AuthorizedClientManager oauth2AuthorizedClientManager(
+            ClientRegistrationRepository clientRegistrationRepository,
+            OAuth2AuthorizedClientRepository authorizedClientRepository) {
+        OAuth2AuthorizedClientProvider oauth2AuthorizedClientProvider = OAuth2AuthorizedClientProviderBuilder.builder()
+                .authorizationCode()
+                .clientCredentials()
+                .refreshToken()
+                .password()
+                .build();
+        DefaultOAuth2AuthorizedClientManager oauth2AuthorizedClientManager =
+                new DefaultOAuth2AuthorizedClientManager(clientRegistrationRepository, authorizedClientRepository);
+        oauth2AuthorizedClientManager.setAuthorizedClientProvider(oauth2AuthorizedClientProvider);
+        return oauth2AuthorizedClientManager;
+    }
+
+    private WebClient webClient(OAuth2AuthorizedClientManager oauth2AuthorizedClientManager) {
+        ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
+                new ServletOAuth2AuthorizedClientExchangeFilterFunction(oauth2AuthorizedClientManager);
+        return WebClient.builder()
+                .apply(oauth2Client.oauth2Configuration())
+                .build();
+    }
+
     @LoadBalanced
     @Bean
     @ConditionalOnProperty(prefix = "eureka", name = "client.enabled", havingValue = "true", matchIfMissing = true)
-    public OAuth2RestTemplate lbOauth2RestTemplate(OAuth2ProtectedResourceDetails details, OAuth2ClientContext oauth2ClientContext) {
-        return new OAuth2RestTemplate(details, oauth2ClientContext);
+    public WebClient lbOauth2WebClient(OAuth2AuthorizedClientManager oauth2AuthorizedClientManager) {
+        return webClient(oauth2AuthorizedClientManager);
     }
 
     @Bean
     @ConditionalOnProperty(prefix = "eureka", name = "client.enabled", havingValue = "false", matchIfMissing = false)
-    public OAuth2RestTemplate oauth2RestTemplate(OAuth2ProtectedResourceDetails details, OAuth2ClientContext oauth2ClientContext) {
-        return new OAuth2RestTemplate(details, oauth2ClientContext);
+    public WebClient oauth2WebClient(OAuth2AuthorizedClientManager oauth2AuthorizedClientManager) {
+        return webClient(oauth2AuthorizedClientManager);
     }
 
     /*

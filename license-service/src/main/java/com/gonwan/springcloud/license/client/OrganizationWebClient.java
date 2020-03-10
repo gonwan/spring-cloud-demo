@@ -6,20 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.gonwan.springcloud.license.model.Organization;
 
 @Component
-public class OrganizationRestTemplateClient {
+public class OrganizationWebClient {
 
-    private static final Logger logger = LoggerFactory.getLogger(OrganizationRestTemplateClient.class);
+    private static final Logger logger = LoggerFactory.getLogger(OrganizationWebClient.class);
 
     @Autowired
-    private OAuth2RestTemplate restTemplate;
+    private WebClient webClient;
 
     @Value("${application.organizationUrl}")
     private String organizationUrl;
@@ -32,11 +31,14 @@ public class OrganizationRestTemplateClient {
     @Cacheable(key = "#organizationId", value = "organizations")
     public Organization getOrganization(String organizationId) {
         logger.debug("Calling organization service with id: {}.", organizationId);
-        ResponseEntity<Organization> restExchange = restTemplate.exchange(
-                organizationUrl + "/v1/organizations/{organizationId}",
-                HttpMethod.GET,
-                null, Organization.class, organizationId);
-        return restExchange.getBody();
+        Organization organization = webClient
+                .get()
+                .uri(organizationUrl + "/v1/organizations/{organizationId}", organizationId)
+                .attributes(ServletOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId("sc-provider"))
+                .retrieve()
+                .bodyToMono(Organization.class)
+                .block();
+        return organization;
     }
 
     @CacheEvict(key = "#organizationId", value = "organizations")

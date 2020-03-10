@@ -8,7 +8,7 @@ import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.SubscribableChannel;
 
-import com.gonwan.springcloud.license.client.OrganizationRestTemplateClient;
+import com.gonwan.springcloud.license.client.OrganizationWebClient;
 import com.gonwan.springcloud.license.model.OrganizationRepository;
 
 interface OrganizationChannel {
@@ -28,7 +28,7 @@ public class OrganizationMessageHandler {
 
     /* @CacheEvict only available in proxy mode, so define it in another bean. */
     @Autowired
-    private OrganizationRestTemplateClient restTemplateClient;
+    private OrganizationWebClient organizationClient;
 
     @StreamListener("inputOrganization")
     public void loggerSink(OrganizationMessage msg) {
@@ -42,12 +42,12 @@ public class OrganizationMessageHandler {
             case "UPDATE":
                 logger.debug("Received UPDATE from organization service for id: {}", msg.getOrganizationId());
                 //repository.delete(msg.getOrganizationId());
-                restTemplateClient.evictOrganization(msg.getOrganizationId());
+                organizationClient.evictOrganization(msg.getOrganizationId());
                 break;
             case "DELETE":
                 logger.debug("Received DELETE from organization service for id: {}", msg.getOrganizationId());
                 //repository.delete(msg.getOrganizationId());
-                restTemplateClient.evictOrganization(msg.getOrganizationId());
+                organizationClient.evictOrganization(msg.getOrganizationId());
                 break;
             default:
                 logger.error("Received UNKNOWN action from organization service: {}", msg.toString());
