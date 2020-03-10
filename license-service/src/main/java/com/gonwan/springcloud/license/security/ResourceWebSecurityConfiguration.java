@@ -1,12 +1,16 @@
-package com.gonwan.springcloud.organization.security;
+package com.gonwan.springcloud.license.security;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,6 +25,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 class UserInfoOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
@@ -50,8 +55,44 @@ class UserInfoOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
 }
 
+@Order(1)
 @Configuration
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+class ActuatorWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private SecurityProperties securityProperties;
+
+    /*
+     * See migration guide: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-Security-2.0
+     */
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        List<String> roles = securityProperties.getUser().getRoles();
+        String role = roles.isEmpty() ? "ACTUATOR" : roles.get(0);
+        http
+            .requestMatcher(EndpointRequest.toAnyEndpoint())
+            .authorizeRequests()
+                .requestMatchers(EndpointRequest.to("info", "health")).permitAll()
+                .anyRequest().hasRole(role)
+                .and()
+            .httpBasic();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        SecurityProperties.User user = securityProperties.getUser();
+        List<String> roles = user.getRoles();
+        auth
+            .inMemoryAuthentication()
+                .withUser(user.getName())
+                .password("{noop}" + user.getPassword())
+                .roles(StringUtils.toStringArray(roles));
+    }
+
+}
+
+@Configuration
+public class ResourceWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
