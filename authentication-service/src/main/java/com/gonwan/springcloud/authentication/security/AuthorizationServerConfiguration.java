@@ -42,7 +42,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService());
-        ProviderManager providerManager =  new ProviderManager(Arrays.asList(provider));
+        ProviderManager providerManager = new ProviderManager(Arrays.asList(provider));
         return providerManager;
     }
 

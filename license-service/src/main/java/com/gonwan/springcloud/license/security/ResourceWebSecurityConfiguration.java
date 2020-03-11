@@ -30,7 +30,7 @@ import org.springframework.util.StringUtils;
 @Component
 class UserInfoOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
-    private OAuth2UserService oauth2UserService;
+    private OAuth2UserService<OAuth2UserRequest, ?> oauth2UserService;
     private ClientRegistration clientRegistration;
     private String userNameAttributeName;
 

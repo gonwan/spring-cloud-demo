@@ -1,7 +1,8 @@
 package com.gonwan.springcloud.zipkin;
 
-import javax.sql.DataSource;
 import java.util.concurrent.Executor;
+
+import javax.sql.DataSource;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
 import zipkin.server.EnableZipkinServer;
 
 @SpringBootApplication
