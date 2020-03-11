@@ -60,11 +60,6 @@ public class LicenseApplication {
     }
 
     @Bean
-    public RequestContextListener requestContextListener() {
-        return new RequestContextListener();
-    }
-
-    @Bean
     public OAuth2AuthorizedClientManager oauth2AuthorizedClientManager(
             ClientRegistrationRepository clientRegistrationRepository,
             OAuth2AuthorizedClientRepository authorizedClientRepository) {
@@ -85,7 +80,7 @@ public class LicenseApplication {
                 new ServletOAuth2AuthorizedClientExchangeFilterFunction(oauth2AuthorizedClientManager);
         return WebClient.builder()
                 .filter(new ServletBearerExchangeFilterFunction()) /* bearer token propagation */
-                .apply(oauth2Client.oauth2Configuration()); /* oauth2 client support */
+                .apply(oauth2Client.oauth2Configuration()); /* oauth2 client support, no use currently. */
     }
 
     @LoadBalanced
@@ -99,20 +94,6 @@ public class LicenseApplication {
     @ConditionalOnProperty(prefix = "eureka", name = "client.enabled", havingValue = "false", matchIfMissing = false)
     public WebClient.Builder oauth2WebClientBuilder(OAuth2AuthorizedClientManager oauth2AuthorizedClientManager) {
         return webClientBuilder(oauth2AuthorizedClientManager);
-    }
-
-    /*
-     * CacheManager in spring boot 1.5.x uses this.
-     */
-    @Bean
-    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate<Object, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory);
-        template.setDefaultSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setHashKeySerializer(new GenericJackson2JsonRedisSerializer());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        return template;
     }
 
     /*
