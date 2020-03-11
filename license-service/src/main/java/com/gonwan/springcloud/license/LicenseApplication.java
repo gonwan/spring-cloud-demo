@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
+import org.springframework.security.oauth2.server.resource.web.reactive.function.client.ServletBearerExchangeFilterFunction;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -79,25 +80,25 @@ public class LicenseApplication {
         return oauth2AuthorizedClientManager;
     }
 
-    private WebClient webClient(OAuth2AuthorizedClientManager oauth2AuthorizedClientManager) {
+    private WebClient.Builder webClientBuilder(OAuth2AuthorizedClientManager oauth2AuthorizedClientManager) {
         ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
                 new ServletOAuth2AuthorizedClientExchangeFilterFunction(oauth2AuthorizedClientManager);
         return WebClient.builder()
-                .apply(oauth2Client.oauth2Configuration())
-                .build();
+                .filter(new ServletBearerExchangeFilterFunction()) /* bearer token propagation */
+                .apply(oauth2Client.oauth2Configuration()); /* oauth2 client support */
     }
 
     @LoadBalanced
     @Bean
     @ConditionalOnProperty(prefix = "eureka", name = "client.enabled", havingValue = "true", matchIfMissing = true)
-    public WebClient lbOauth2WebClient(OAuth2AuthorizedClientManager oauth2AuthorizedClientManager) {
-        return webClient(oauth2AuthorizedClientManager);
+    public WebClient.Builder lbOauth2WebClientBuilder(OAuth2AuthorizedClientManager oauth2AuthorizedClientManager) {
+        return webClientBuilder(oauth2AuthorizedClientManager);
     }
 
     @Bean
     @ConditionalOnProperty(prefix = "eureka", name = "client.enabled", havingValue = "false", matchIfMissing = false)
-    public WebClient oauth2WebClient(OAuth2AuthorizedClientManager oauth2AuthorizedClientManager) {
-        return webClient(oauth2AuthorizedClientManager);
+    public WebClient.Builder oauth2WebClientBuilder(OAuth2AuthorizedClientManager oauth2AuthorizedClientManager) {
+        return webClientBuilder(oauth2AuthorizedClientManager);
     }
 
     /*

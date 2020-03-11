@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -18,7 +17,7 @@ public class OrganizationWebClient {
     private static final Logger logger = LoggerFactory.getLogger(OrganizationWebClient.class);
 
     @Autowired
-    private WebClient webClient;
+    private WebClient.Builder webClientBuilder;
 
     @Value("${application.organizationUrl}")
     private String organizationUrl;
@@ -31,10 +30,9 @@ public class OrganizationWebClient {
     @Cacheable(key = "#organizationId", value = "organizations")
     public Organization getOrganization(String organizationId) {
         logger.debug("Calling organization service with id: {}.", organizationId);
-        Organization organization = webClient
+        Organization organization = webClientBuilder.build()
                 .get()
                 .uri(organizationUrl + "/v1/organizations/{organizationId}", organizationId)
-                .attributes(ServletOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId("sc-provider"))
                 .retrieve()
                 .bodyToMono(Organization.class)
                 .block();
