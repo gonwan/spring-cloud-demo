@@ -8,29 +8,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.netty.NettyServerCustomizer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.client.reactive.ReactorResourceFactory;
 import reactor.netty.channel.BootstrapHandlers;
-import reactor.netty.resources.ConnectionProvider;
 
 import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 public class GatewayApplication {
 
-    //@Bean
-    public ReactorResourceFactory reactorServerResourceFactory() {
-        ReactorResourceFactory reactorResourceFactory = new ReactorResourceFactory();
-        ConnectionProvider connectionProvider = ConnectionProvider.builder("webflux-server").build();
-        reactorResourceFactory.setConnectionProvider(connectionProvider);
-        reactorResourceFactory.setUseGlobalResources(false);
-        return reactorResourceFactory;
-    }
-
     @Bean
     public NettyServerCustomizer nettyServerCustomizer() {
         return httpServer -> httpServer.tcpConfiguration(tcpServer -> {
-            tcpServer= tcpServer.option(ChannelOption.SO_KEEPALIVE, true);
-            /**
+            tcpServer = tcpServer.option(ChannelOption.SO_KEEPALIVE, true);
+            /*
              * We are modifying child handler, use doOnBind() instead of doOnConnection().
              */
             tcpServer = tcpServer.doOnBind(serverBootstrap ->
