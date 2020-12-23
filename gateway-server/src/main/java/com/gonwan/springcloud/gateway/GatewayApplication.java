@@ -13,11 +13,9 @@ public class GatewayApplication {
 
     @Bean
     public NettyServerCustomizer nettyServerCustomizer() {
-        return httpServer -> {
-            httpServer.childOption(ChannelOption.SO_KEEPALIVE, true);
-            httpServer.idleTimeout(Duration.ofMinutes(10));
-            return httpServer;
-        };
+        return httpServer -> httpServer
+                .childOption(ChannelOption.SO_KEEPALIVE, true)
+                .idleTimeout(Duration.ofMinutes(10));
     }
 
     public static void main(String[] args) {
