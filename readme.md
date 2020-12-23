@@ -6,7 +6,7 @@ The demo project is initialized from [https://github.com/carnellj/spmia-chapter1
 - Easier local debugging by switching off service discovery and remote config file lookup.
 - Switch from Postgres to MySQL, and from Kafka to RabbitMQ.
 - Switch from Netflix [Hystrix](https://github.com/Netflix/hystrix) to [Resilience4j](https://github.com/resilience4j/resilience4j).
-- Provide [spring-cloud-gateway](https://github.com/spring-cloud/spring-cloud-gateway/) API gateway, as well as Netflix [Zuul](https://github.com/Netflix/zuul).
+- Provide [spring-cloud-gateway](https://github.com/spring-cloud/spring-cloud-gateway/) API gateway, and substitute deprecated Netflix [Zuul](https://github.com/Netflix/zuul).
 - Kubernetes support.
 - Swagger integration.
 - Spring Boot Admin integration.
@@ -16,7 +16,6 @@ The project includes:
 - [eureka-server](eureka-server): Service for service discovery. Registered services are shown on its web frontend, running at 8761 port.
 - [config-server](config-server): Service for config file management. Config files can be accessed via: `http://${config-server}:8888/${appname}/${profile}`. Where `${appname}` is `spring.application.name` and `${profile}` is something like `dev`, `prd` or `default`.
 - [zipkin-server](zipkin-server): Service to aggregate distributed tracing data, working with [spring-cloud-sleuth](https://github.com/spring-cloud/spring-cloud-sleuth/). It runs at 9411 port. All cross service requests, message bus delivery are traced by default.
-- [zuul-server](zuul-server): Gateway service to route requests based on Netflix [Zuul](https://github.com/Netflix/zuul), running at 5555 port.
 - [gateway-server](gateway-server): Gateway service to route requests based on [spring-cloud-gateway](https://github.com/spring-cloud/spring-cloud-gateway/), running at 5555 port.
 - [authentication-service](authentication-service): OAuth2 enabled authentication service running at 8901. Redis is used for token cache. JWT support is also included. Spring Cloud Security 2.0 saves a lot when building this kind of services. 
 - [organization-service](organization-service): Application service holding organization information, running at 8085. It also acts as an OAuth2 client to `authentication-service` for authorization.
@@ -68,7 +67,7 @@ Minimum deployment includes: authentication-service, organization-service & lice
 Suppose you are using the kubernetes deployment.
 
 ### Get OAuth2 token
-`curl` is used here, and 31004 is the cluster-wide port of the Zuul gateway server:
+`curl` is used here, and 31004 is the cluster-wide port of the gateway server:
 ```
 # curl -u eagleeye:thisissecret http://172.16.87.12:31004/api/auth/oauth/token -X POST -d "grant_type=password&scope=webclient&username=user&password=password1"
 {"access_token":"d3b817dc-fb7a-4e65-a080-d0e34c0dc4d5","token_type":"bearer","refresh_token":"a5d12d05-78ff-4170-ab4f-b9c4e9886358","expires_in":41496,"scope":"webclient"}

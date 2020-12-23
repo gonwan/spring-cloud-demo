@@ -12,7 +12,6 @@
         <module>config-server</module>
         <module>eureka-server</module>
         <module>zipkin-server</module>
-        <module>zuul-server</module>
         <module>gateway-server</module>
         <module>authentication-service</module>
         <module>organization-service</module>
