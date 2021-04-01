@@ -19,15 +19,15 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.1</version>
-        <relativePath />
+        <version>2.4.3</version>
+        <relativePath/>
     </parent>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>2020.0.0</version>
+                <version>2020.0.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -53,12 +53,11 @@
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.security.experimental</groupId>-->
 <!--            <artifactId>spring-security-oauth2-authorization-server</artifactId>-->
-<!--            <version>0.0.3</version>-->
+<!--            <version>0.1.0</version>-->
 <!--        </dependency>-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
-            <version>2.2.4.RELEASE</version>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
