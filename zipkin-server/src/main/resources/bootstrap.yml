@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: zipkin-server
-  cloud:
-    config:
-      enabled: false

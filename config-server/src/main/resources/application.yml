@@ -5,6 +5,7 @@ eureka:
   instance:
     preferIpAddress: true
   client:
+    enabled: false
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
@@ -34,11 +35,15 @@ eureka:
 #          #password: 123456
 
 spring:
+  application:
+    name: config-server
   profiles:
     active: native
   cloud:
     config:
       server:
+        encrypt:
+          enabled: false
         native:
           searchLocations: |
             classpath:config/zipkin-server,

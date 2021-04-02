@@ -8,6 +8,10 @@ zipkin:
     type: mysql
 
 spring:
+  application:
+    name: zipkin-server
+  config:
+    import: optional:configserver:http://dummy-configserver
   datasource:
     initializationMode: ALWAYS
     schema: classpath:mysql.sql
