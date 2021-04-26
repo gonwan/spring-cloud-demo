@@ -7,6 +7,9 @@ zipkin:
   storage:
     type: mysql
 
+encrypt:
+  key: IMSYMMETRIC
+
 spring:
   application:
     name: zipkin-server
@@ -30,8 +33,6 @@ spring:
       idleTimeout: 600000
       maxLifetime: 1800000
       #connectionTimeout: 30000  # overall connection timeout = connectionTimeout * maxReconnects, see DriverManager#setLoginTimeout().
-  main:
-    allowBeanDefinitionOverriding: true
 
 management:
   metrics:

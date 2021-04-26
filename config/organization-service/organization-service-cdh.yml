@@ -13,6 +13,9 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
+encrypt:
+  key: IMSYMMETRIC
+
 spring:
   application:
     name: organization-service
@@ -39,8 +42,8 @@ spring:
       idleTimeout: 600000
       maxLifetime: 1800000
   rabbitmq:
-    # virtual box
-    host: 127.0.0.1
+    # vmware
+    host: 192.168.127.129
     port: 5672
   security:
     user:

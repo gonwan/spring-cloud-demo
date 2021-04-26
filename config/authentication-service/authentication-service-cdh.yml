@@ -19,7 +19,7 @@ spring:
   cloud:
     config:
       enabled: true
-      # allow command line override only
+      # allow command line override
       allowOverride: true
       overrideSystemProperties: false
   redis:

@@ -107,8 +107,6 @@ spec:
           value: "http://eureka-server:8761/eureka/"
         - name: EUREKA_SERVER_PORT
           value: "8761"
-        - name: ENCRYPT_KEY
-          value: "IMSYMMETRIC"
 
 # zipkin-server
 ---
@@ -152,8 +150,6 @@ spec:
           value: "http://config-server:8888/"
         - name: CONFIG_SERVER_PORT
           value: "8888"
-        - name: ENCRYPT_KEY
-          value: "IMSYMMETRIC"
 
 # gateway-server
 ---
@@ -252,8 +248,6 @@ spec:
           value: "8761"
         - name: CONFIG_SERVER_PORT
           value: "8888"
-        - name: ENCRYPT_KEY
-          value: "IMSYMMETRIC"
 
 # organization-service
 ---
@@ -307,8 +301,6 @@ spec:
           value: "8888"
         - name: ZIPKIN_PORT
           value: "9411"
-        - name: ENCRYPT_KEY
-          value: "IMSYMMETRIC"
 
 # license-service
 ---
@@ -362,5 +354,3 @@ spec:
           value: "8888"
         - name: ZIPKIN_PORT
           value: "9411"
-        - name: ENCRYPT_KEY
-          value: "IMSYMMETRIC"

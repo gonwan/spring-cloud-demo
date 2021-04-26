@@ -11,6 +11,13 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
+# curl http://localhost:8888/encrypt -X POST -d 'sc_passw0rd'
+#   38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4
+# curl http://localhost:8888/decrypt -X POST -d '38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4'
+#   sc_passw0rd
+encrypt:
+  key: IMSYMMETRIC
+
 #spring:
 #  cloud:
 #    config:
