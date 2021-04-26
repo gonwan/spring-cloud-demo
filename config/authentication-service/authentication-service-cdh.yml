@@ -23,7 +23,7 @@ spring:
       allowOverride: true
       overrideSystemProperties: false
   redis:
-    host: 10.228.129.235
+    host: 10.228.131.133
     port: 6379
   security:
     user:

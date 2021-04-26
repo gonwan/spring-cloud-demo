@@ -29,7 +29,7 @@ spring:
           group: license.group
   datasource:
     initializationMode: ALWAYS
-    url: "jdbc:mysql://10.228.129.235:3306/sc_database?useUnicode=true&characterEncoding=utf8"
+    url: "jdbc:mysql://10.228.131.133:3306/sc_database?useUnicode=true&characterEncoding=utf8"
     username: "springcloud"
     password: "{cipher}38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4"
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -40,7 +40,7 @@ spring:
       idleTimeout: 600000
       maxLifetime: 1800000
   redis:
-    host: 10.228.129.235
+    host: 10.228.131.133
     port: 6379
   cache:
     type: REDIS
