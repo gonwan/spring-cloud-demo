@@ -30,4 +30,4 @@ java -Djava.security.egd=file:/dev/./urandom -Dserver.port=$SERVER_PORT     \
      -Dspring.profiles.active=$PROFILE                                      \
      -Dspring.zipkin.baseUrl=$ZIPKIN_URI                                    \
      -Dspring.security.oauth2.client.provider.sc-provider.userInfoUri=$AUTH_SERVICE_URI       \
-     -jar /usr/local/license-service/@project.build.finalName@.jar
+     -jar /usr/local/@project.artifactId@/@project.build.finalName@.jar

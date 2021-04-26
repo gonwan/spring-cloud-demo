@@ -12,4 +12,4 @@ echo "********************************************************"
 java -Djava.security.egd=file:/dev/./urandom                                \
      -Deureka.client.enabled=true                                           \
      -Deureka.client.serviceUrl.defaultZone=$EUREKA_SERVER_URI              \
-     -jar /usr/local/config-server/@project.build.finalName@.jar
+     -jar /usr/local/@project.artifactId@/@project.build.finalName@.jar

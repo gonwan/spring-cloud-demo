@@ -29,4 +29,4 @@ java -Djava.security.egd=file:/dev/./urandom -Dserver.port=$SERVER_PORT     \
      -Dspring.cloud.config.uri=$CONFIG_SERVER_URI                           \
      -Dspring.profiles.active=$PROFILE                                      \
      -Dspring.zipkin.baseUrl=$ZIPKIN_URI                                    \
-     -jar /usr/local/gateway-server/@project.build.finalName@.jar
+     -jar /usr/local/@project.artifactId@/@project.build.finalName@.jar
