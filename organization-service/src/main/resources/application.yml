@@ -18,7 +18,7 @@ spring:
   application:
     name: organization-service
   config:
-    import: optional:configserver:http://dummy-configserver
+    import: optional:configserver:http://dummy-configserver/
   datasource:
     initializationMode: ALWAYS
     url: "jdbc:mysql://192.168.11.234:3306/sc_database?useUnicode=true&characterEncoding=utf8"

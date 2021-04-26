@@ -149,7 +149,7 @@ spec:
         - name: SERVER_PORT
           value: "9411"
         - name: CONFIG_SERVER_URI
-          value: "http://config-server:8888"
+          value: "http://config-server:8888/"
         - name: CONFIG_SERVER_PORT
           value: "8888"
         - name: ENCRYPT_KEY
@@ -196,7 +196,7 @@ spec:
         - name: EUREKA_SERVER_URI
           value: "http://eureka-server:8761/eureka/"
         - name: CONFIG_SERVER_URI
-          value: "http://config-server:8888"
+          value: "http://config-server:8888/"
         - name: ZIPKIN_URI
           value: "http://zipkin:9411"
         - name: EUREKA_SERVER_PORT
@@ -247,7 +247,7 @@ spec:
         - name: EUREKA_SERVER_URI
           value: "http://eureka-server:8761/eureka/"
         - name: CONFIG_SERVER_URI
-          value: "http://config-server:8888"
+          value: "http://config-server:8888/"
         - name: EUREKA_SERVER_PORT
           value: "8761"
         - name: CONFIG_SERVER_PORT
@@ -296,7 +296,7 @@ spec:
         - name: EUREKA_SERVER_URI
           value: "http://eureka-server:8761/eureka/"
         - name: CONFIG_SERVER_URI
-          value: "http://config-server:8888"
+          value: "http://config-server:8888/"
         - name: ZIPKIN_URI
           value: "http://zipkin:9411"
         - name: AUTH_SERVICE_URI
@@ -351,7 +351,7 @@ spec:
         - name: EUREKA_SERVER_URI
           value: "http://eureka-server:8761/eureka/"
         - name: CONFIG_SERVER_URI
-          value: "http://config-server:8888"
+          value: "http://config-server:8888/"
         - name: ZIPKIN_URI
           value: "http://zipkin:9411"
         - name: AUTH_SERVICE_URI

@@ -18,7 +18,7 @@ spring:
   application:
     name: gateway-server
   config:
-    import: optional:configserver:http://dummy-configserver
+    import: optional:configserver:http://dummy-configserver/
   security:
     user:
       name: actuator
