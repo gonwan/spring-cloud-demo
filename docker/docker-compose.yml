@@ -2,7 +2,7 @@ version: '2'
 
 services:
   mysql:
-    image: mysql:5.7
+    image: mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
     ports:
     - "3306:3306"
@@ -12,11 +12,11 @@ services:
       MYSQL_DATABASE: sc_database
       MYSQL_ROOT_PASSWORD: DO_NOT_USE
   redis:
-    image: redis:3.2-alpine
+    image: redis:5.0-alpine
     ports:
     - "6379:6379"
   rabbit:
-    image: rabbitmq:3.6-management-alpine
+    image: rabbitmq:3.7-management-alpine
     ports:
     - "5672:5672"
     - "15672:15672"
