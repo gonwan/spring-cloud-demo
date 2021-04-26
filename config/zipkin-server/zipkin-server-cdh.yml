@@ -15,6 +15,7 @@ spring:
     name: zipkin-server
   cloud:
     config:
+      enabled: true
       # allow command line override
       allowOverride: true
       overrideSystemProperties: false

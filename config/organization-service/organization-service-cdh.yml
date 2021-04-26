@@ -21,6 +21,7 @@ spring:
     name: organization-service
   cloud:
     config:
+      enabled: true
       # allow command line override
       allowOverride: true
       overrideSystemProperties: false
