@@ -15,6 +15,19 @@ eureka:
 
 # mysql/redis/rabbit service name used here. 
 spring:
+  application:
+    name: license-service
+  cloud:
+    config:
+      # allow command line override
+      allowOverride: true
+      overrideSystemProperties: false
+    stream:
+      bindings:
+        inputOrganization:
+          destination: sc.organization.change.topic
+          contentType: application/json
+          group: license.group
   datasource:
     initializationMode: ALWAYS
     url: "jdbc:mysql://mysql:3306/sc_database?useUnicode=true&characterEncoding=utf8"
@@ -52,17 +65,6 @@ spring:
             clientId: eagleeye
             clientSecret: thisissecret
             authorizationGrantType: client_credentials,password,refresh_token
-  cloud:
-    config:
-      # allow command line override
-      allowOverride: true
-      overrideSystemProperties: false
-    stream:
-      bindings:
-        inputOrganization:
-            destination: sc.organization.change.topic
-            contentType: application/json
-            group: license.group
   sleuth:
     sampler:
       probability: 1.0

@@ -8,10 +8,8 @@ zipkin:
     type: mysql
 
 spring:
-  config:
-    # allow command line override
-    allowOverride: true
-    overrideSystemProperties: false
+  application:
+    name: zipkin-server
   datasource:
     initializationMode: ALWAYS
     schema: classpath:mysql.sql

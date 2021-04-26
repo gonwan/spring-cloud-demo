@@ -17,8 +17,28 @@ eureka:
 spring:
   application:
     name: gateway-server
-  config:
-    import: optional:configserver:http://dummy-configserver/
+  cloud:
+    config:
+      enabled: false
+    gateway:
+      # seems spring cloud gateway does not support a global context path like /api
+      defaultFilters:
+        - StripPrefix=2
+      routes:
+        - id: authentication-id
+          uri: http://localhost:8901
+          predicates:
+            - Path=/api/auth/**
+        - id: organization-id
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/organization/**
+        - id: license-id
+          uri: http://localhost:8080
+          predicates:
+            - Path=/api/license/**
+  #config:
+  #  import: optional:configserver:http://dummy-configserver/
   security:
     user:
       name: actuator
@@ -31,24 +51,6 @@ spring:
     sender:
       # otherwise rabbit is used if available
       type: WEB
-  cloud:
-    gateway:
-      # seems spring cloud gateway does not support a global context path like /api
-      defaultFilters:
-      - StripPrefix=2
-      routes:
-      - id: authentication-id
-        uri: http://localhost:8901
-        predicates:
-        - Path=/api/auth/**
-      - id: organization-id
-        uri: http://localhost:8085
-        predicates:
-        - Path=/api/organization/**
-      - id: license-id
-        uri: http://localhost:8080
-        predicates:
-        - Path=/api/license/**
 
 management:
   endpoints:

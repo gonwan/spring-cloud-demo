@@ -10,8 +10,11 @@ zipkin:
 spring:
   application:
     name: zipkin-server
-  config:
-    import: optional:configserver:http://dummy-configserver/
+  cloud:
+    config:
+      enabled: false
+  #config:
+  #  import: optional:configserver:http://dummy-configserver/
   datasource:
     initializationMode: ALWAYS
     schema: classpath:mysql.sql

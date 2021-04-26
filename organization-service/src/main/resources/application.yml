@@ -17,8 +17,16 @@ eureka:
 spring:
   application:
     name: organization-service
-  config:
-    import: optional:configserver:http://dummy-configserver/
+  cloud:
+    config:
+      enabled: false
+    stream:
+      bindings:
+        output:
+          destination: sc.organization.change.topic
+          contentType: application/json
+  #config:
+  #  import: optional:configserver:http://dummy-configserver/
   datasource:
     initializationMode: ALWAYS
     url: "jdbc:mysql://192.168.11.234:3306/sc_database?useUnicode=true&characterEncoding=utf8"
@@ -51,12 +59,6 @@ spring:
             clientId: eagleeye
             clientSecret: thisissecret
             authorizationGrantType: client_credentials,password,refresh_token
-  cloud:
-    stream:
-      bindings:
-        output:
-            destination: sc.organization.change.topic
-            contentType: application/json
   sleuth:
     sampler:
       probability: 0.0

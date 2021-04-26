@@ -14,6 +14,18 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 
 spring:
+  application:
+    name: organization-service
+  cloud:
+    config:
+      # allow command line override
+      allowOverride: true
+      overrideSystemProperties: false
+    stream:
+      bindings:
+        output:
+          destination: sc.organization.change.topic
+          contentType: application/json
   datasource:
     initializationMode: ALWAYS
     url: "jdbc:mysql://10.228.129.235:3306/sc_database?useUnicode=true&characterEncoding=utf8"
@@ -47,16 +59,6 @@ spring:
             clientId: eagleeye
             clientSecret: thisissecret
             authorizationGrantType: client_credentials,password,refresh_token
-  cloud:
-    config:
-      # allow command line override
-      allowOverride: true
-      overrideSystemProperties: false
-    stream:
-      bindings:
-        output:
-            destination: sc.organization.change.topic
-            contentType: application/json
   sleuth:
     sampler:
       probability: 1.0

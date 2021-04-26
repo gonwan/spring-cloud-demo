@@ -17,8 +17,11 @@ eureka:
 spring:
   application:
     name: authentication-service
-  config:
-    import: optional:configserver:http://dummy-configserver/
+  cloud:
+    config:
+      enabled: false
+  #config:
+  #  import: optional:configserver:http://dummy-configserver/
   redis:
     host: 192.168.11.234
     port: 6379
