@@ -46,7 +46,7 @@ spring:
     type: REDIS
   rabbitmq:
     # virtual box
-    host: 10.0.2.15
+    host: 127.0.0.1
     port: 5672
   security:
     user:

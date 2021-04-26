@@ -10,6 +10,11 @@ zipkin:
 spring:
   application:
     name: zipkin-server
+  cloud:
+    config:
+      # allow command line override
+      allowOverride: true
+      overrideSystemProperties: false
   datasource:
     initializationMode: ALWAYS
     schema: classpath:mysql.sql
