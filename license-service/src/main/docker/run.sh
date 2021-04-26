@@ -25,8 +25,9 @@ echo "********************************************************"
 java -Djava.security.egd=file:/dev/./urandom -Dserver.port=$SERVER_PORT     \
      -Deureka.client.enabled=true                                           \
      -Deureka.client.serviceUrl.defaultZone=$EUREKA_SERVER_URI              \
-     -Dspring.config.import=optional:configserver:$CONFIG_SERVER_URI        \
      -Dspring.profiles.active=$PROFILE                                      \
+     -Dspring.cloud.config.enabled=true                                     \
+     -Dspring.config.import=optional:configserver:$CONFIG_SERVER_URI        \
      -Dspring.zipkin.baseUrl=$ZIPKIN_URI                                    \
      -Dspring.security.oauth2.client.provider.sc-provider.userInfoUri=$AUTH_SERVICE_URI       \
      -jar /usr/local/@project.artifactId@/@project.build.finalName@.jar
