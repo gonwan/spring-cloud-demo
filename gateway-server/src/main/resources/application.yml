@@ -45,6 +45,8 @@ spring:
       password: actuator
       roles: ACTUATOR
   sleuth:
+    reactor:
+      instrumentation-type: decorate_on_each
     sampler:
       probability: 0.0
   zipkin:
