@@ -25,6 +25,10 @@ spring:
       defaultFilters:
         - StripPrefix=2
       routes:
+        - id: baidu
+          uri: http://baidu.com
+          predicates:
+            - Method=GET
         - id: authentication-id
           uri: http://localhost:8901
           predicates:
@@ -45,6 +49,8 @@ spring:
       password: actuator
       roles: ACTUATOR
   sleuth:
+    #reactor:
+    #  instrumentation-type: decorate_on_each
     reactor:
       instrumentation-type: decorate_on_each
     sampler:
