@@ -1,19 +1,5 @@
 package com.gonwan.springcloud.authentication.security;
 
-import java.io.IOException;
-
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.jackson2.CoreJackson2Module;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.OAuth2AccessTokenJackson2Deserializer;
-import org.springframework.security.oauth2.common.OAuth2AccessTokenJackson2Serializer;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.OAuth2Request;
-import org.springframework.security.oauth2.provider.TokenRequest;
-import org.springframework.security.oauth2.provider.token.store.redis.StandardStringSerializationStrategy;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -28,6 +14,17 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.jackson2.CoreJackson2Module;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2AccessTokenJackson2Deserializer;
+import org.springframework.security.oauth2.common.OAuth2AccessTokenJackson2Serializer;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Request;
+import org.springframework.security.oauth2.provider.token.store.redis.StandardStringSerializationStrategy;
+
+import java.io.IOException;
 
 class MyOAuth2AccessTokenJackson2Serializer extends StdSerializer<OAuth2AccessToken>  {
 
@@ -81,21 +78,10 @@ abstract class OAuth2AccessTokenMixIn {
 abstract class OAuth2AuthenticationMixIn {
 
     public OAuth2AuthenticationMixIn(
-            @JsonProperty("oauth2Request") OAuth2Request storedRequest,
+            @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class") @JsonProperty("oauth2Request") OAuth2Request storedRequest,
             @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class") @JsonProperty("userAuthentication") Authentication userAuthentication) {
 
     }
-
-}
-
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
-abstract class OAuth2RequestMixIn {
-
-    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
-    public TokenRequest refreshTokenRequest;
-
-    @JsonIgnore
-    public boolean refresh;
 
 }
 
@@ -106,11 +92,10 @@ public class Jackson2SerializationStrategy extends StandardStringSerializationSt
     public Jackson2SerializationStrategy() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
         objectMapper.registerModule(new CoreJackson2Module());
         objectMapper.addMixIn(OAuth2AccessToken.class, OAuth2AccessTokenMixIn.class);
         objectMapper.addMixIn(OAuth2Authentication.class, OAuth2AuthenticationMixIn.class);
-        objectMapper.addMixIn(OAuth2Request.class, OAuth2RequestMixIn.class);
         serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
     }
 
