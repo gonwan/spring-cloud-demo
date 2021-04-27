@@ -1,5 +1,6 @@
 package com.gonwan.springcloud.authentication.security;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -34,6 +35,16 @@ abstract class OAuth2AuthenticationMixIn {
 
 }
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+@JsonAutoDetect(
+        getterVisibility = JsonAutoDetect.Visibility.NONE,
+        isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+        fieldVisibility = JsonAutoDetect.Visibility.ANY
+)
+abstract class OAuth2RequestMixIn {
+
+}
+
 public class Jackson2SerializationStrategy extends StandardStringSerializationStrategy {
 
     private GenericJackson2JsonRedisSerializer serializer;
@@ -45,6 +56,7 @@ public class Jackson2SerializationStrategy extends StandardStringSerializationSt
         objectMapper.registerModule(new CoreJackson2Module());
         objectMapper.addMixIn(OAuth2AccessToken.class, OAuth2AccessTokenMixIn.class);
         objectMapper.addMixIn(OAuth2Authentication.class, OAuth2AuthenticationMixIn.class);
+        objectMapper.addMixIn(OAuth2Request.class, OAuth2RequestMixIn.class);
         serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
     }
 
