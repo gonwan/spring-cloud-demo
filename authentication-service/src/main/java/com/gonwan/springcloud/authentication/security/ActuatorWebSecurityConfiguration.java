@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.boot.actuate.health.HealthEndpoint;
+import org.springframework.boot.actuate.info.InfoEndpoint;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -24,16 +26,16 @@ public class ActuatorWebSecurityConfiguration extends WebSecurityConfigurerAdapt
 
     /*
      * See migration guide: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-Security-2.0
+     * See: org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         List<String> roles = securityProperties.getUser().getRoles();
-        String role = roles.isEmpty() ? "ACTUATOR" : roles.get(0);
         http
             .requestMatcher(EndpointRequest.toAnyEndpoint())
             .authorizeRequests()
-                .requestMatchers(EndpointRequest.to("info", "health")).permitAll()
-                .anyRequest().hasRole(role)
+                .requestMatchers(EndpointRequest.to(HealthEndpoint.class, InfoEndpoint.class)).permitAll()
+                .anyRequest().hasAnyRole(StringUtils.toStringArray(roles))
                 .and()
             .httpBasic();
     }
