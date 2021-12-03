@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.4</version>
+        <version>2.6.1</version>
         <relativePath />
     </parent>
     <dependencyManagement>
@@ -27,7 +27,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>2020.0.2</version>
+                <version>2021.0.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -51,9 +51,9 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 <!--        <dependency>-->
-<!--            <groupId>org.springframework.security.experimental</groupId>-->
+<!--            <groupId>org.springframework.security</groupId>-->
 <!--            <artifactId>spring-security-oauth2-authorization-server</artifactId>-->
-<!--            <version>0.1.0</version>-->
+<!--            <version>0.2.1</version>-->
 <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.security.oauth.boot</groupId>

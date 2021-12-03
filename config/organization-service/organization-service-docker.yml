@@ -32,7 +32,6 @@ spring:
           destination: sc.organization.change.topic
           contentType: application/json
   datasource:
-    initializationMode: ALWAYS
     url: "jdbc:mysql://mysql:3306/sc_database?useUnicode=true&characterEncoding=utf8"
     username: "springcloud"
     password: "{cipher}38b6dd6855bccf5682b4ca4762b278ce66421167be9d5ec4c919e4fb8e236cd4"
@@ -43,6 +42,10 @@ spring:
       maximumPoolSize: 2
       idleTimeout: 600000
       maxLifetime: 1800000
+  sql:
+    init:
+      mode: ALWAYS
+      schema-locations: schema.sql
   rabbitmq:
     host: rabbit
     port: 5672

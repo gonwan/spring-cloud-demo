@@ -16,8 +16,6 @@ spring:
   #config:
   #  import: optional:configserver:http://dummy-configserver/
   datasource:
-    initializationMode: ALWAYS
-    schema: classpath:mysql.sql
     url: "jdbc:mysql://192.168.11.234:3306/sc_database?useUnicode=true&characterEncoding=utf8"
     jdbcUrl: ${spring.datasource.url}
     username: "springcloud"
@@ -29,6 +27,10 @@ spring:
       maximumPoolSize: 2
       idleTimeout: 600000
       maxLifetime: 1800000
+  sql:
+    init:
+      mode: ALWAYS
+      schema-locations: classpath:mysql.sql
 
 management:
   metrics:

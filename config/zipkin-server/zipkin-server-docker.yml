@@ -20,8 +20,6 @@ spring:
       allowOverride: true
       overrideSystemProperties: false
   datasource:
-    initializationMode: ALWAYS
-    schema: classpath:mysql.sql
     url: "jdbc:mysql://mysql:3306/sc_database?useUnicode=true&characterEncoding=utf8&autoReconnect=true&maxReconnects=3"
     jdbcUrl: ${spring.datasource.url}
     username: "springcloud"
@@ -34,6 +32,10 @@ spring:
       idleTimeout: 600000
       maxLifetime: 1800000
       #connectionTimeout: 30000  # overall connection timeout = connectionTimeout * maxReconnects, see DriverManager#setLoginTimeout().
+  sql:
+    init:
+      mode: ALWAYS
+      schema-locations: classpath:mysql.sql
 
 management:
   metrics:
