@@ -1,5 +1,7 @@
 server:
   port: 5555
+  netty:
+    idle-timeout: 10m
 
 eureka:
   instance:

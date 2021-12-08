@@ -1,5 +1,7 @@
 server:
   port: 5555
+  netty:
+    idle-timeout: 10m
 
 eureka:
   instance:
@@ -41,6 +43,9 @@ spring:
           uri: http://localhost:8080
           predicates:
             - Path=/api/license/**
+      httpclient:
+        pool:
+          max-idle-time:
   #config:
   #  import: optional:configserver:http://dummy-configserver/
   security:
