@@ -43,9 +43,6 @@ spring:
           uri: http://localhost:8080
           predicates:
             - Path=/api/license/**
-      httpclient:
-        pool:
-          max-idle-time:
   #config:
   #  import: optional:configserver:http://dummy-configserver/
   security:
