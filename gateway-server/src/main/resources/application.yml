@@ -53,8 +53,6 @@ spring:
   sleuth:
     #reactor:
     #  instrumentation-type: decorate_on_each
-    reactor:
-      instrumentation-type: decorate_on_each
     sampler:
       probability: 0.0
   zipkin:
