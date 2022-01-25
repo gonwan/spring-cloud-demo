@@ -1,22 +1,20 @@
 package com.gonwan.springcloud.license.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-
+import com.gonwan.springcloud.license.client.OrganizationWebClient;
+import com.gonwan.springcloud.license.model.License;
+import com.gonwan.springcloud.license.model.LicenseRepository;
+import com.gonwan.springcloud.license.model.Organization;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gonwan.springcloud.license.client.OrganizationWebClient;
-import com.gonwan.springcloud.license.model.License;
-import com.gonwan.springcloud.license.model.LicenseRepository;
-import com.gonwan.springcloud.license.model.Organization;
-
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 @Service
 public class LicenseService {

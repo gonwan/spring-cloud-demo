@@ -8,7 +8,7 @@ The demo project is initialized from [https://github.com/carnellj/spmia-chapter1
 - Switch from Netflix [Hystrix](https://github.com/Netflix/hystrix) to [Resilience4j](https://github.com/resilience4j/resilience4j).
 - Provide [spring-cloud-gateway](https://github.com/spring-cloud/spring-cloud-gateway/) API gateway, and substitute deprecated Netflix [Zuul](https://github.com/Netflix/zuul).
 - Kubernetes support.
-- Swagger integration.
+- OpenAPI/Swagger integration via [Springdoc](https://github.com/springdoc/springdoc-openapi).
 - Spring Boot Admin integration.
 - Prometheus & Grafana integration.
 

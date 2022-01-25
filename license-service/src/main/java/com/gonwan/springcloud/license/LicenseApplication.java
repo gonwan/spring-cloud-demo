@@ -1,5 +1,9 @@
 package com.gonwan.springcloud.license;
 
+import com.gonwan.springcloud.license.controller.LicenseServiceController;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -23,12 +27,6 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepo
 import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.security.oauth2.server.resource.web.reactive.function.client.ServletBearerExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -36,22 +34,20 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class LicenseApplication {
 
     @Bean
-    public ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("License API")
-                .termsOfServiceUrl("http://www.gonwan.com/")
-                .version("2.0")
+    public GroupedOpenApi groupedOpenApi() {
+        return GroupedOpenApi.builder()
+                .group("License API")
+                .packagesToScan(LicenseServiceController.class.getPackage().getName())
                 .build();
     }
 
     @Bean
-    public Docket docket() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage(getClass().getPackage().getName()))
-                .paths(PathSelectors.any())
-                .build();
+    public OpenAPI openAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Spring Cloud Demo API")
+                        .termsOfService("http://www.gonwan.com/")
+                        .version("2.0"));
     }
 
     @Bean

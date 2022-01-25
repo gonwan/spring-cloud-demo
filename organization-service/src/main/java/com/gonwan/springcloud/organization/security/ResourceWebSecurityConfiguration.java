@@ -1,9 +1,5 @@
 package com.gonwan.springcloud.organization.security;
 
-import java.time.Instant;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.actuate.health.HealthEndpoint;
@@ -28,6 +24,10 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 class UserInfoOpaqueTokenIntrospector implements OpaqueTokenIntrospector {

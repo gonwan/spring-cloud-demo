@@ -1,5 +1,7 @@
 package com.gonwan.springcloud.license.event;
 
+import com.gonwan.springcloud.license.client.OrganizationWebClient;
+import com.gonwan.springcloud.license.model.OrganizationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +9,6 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.SubscribableChannel;
-
-import com.gonwan.springcloud.license.client.OrganizationWebClient;
-import com.gonwan.springcloud.license.model.OrganizationRepository;
 
 interface OrganizationChannel {
 

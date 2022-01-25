@@ -1,17 +1,15 @@
 package com.gonwan.springcloud.organization;
 
+import com.gonwan.springcloud.organization.controller.OrganizationServiceController;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.context.annotation.Bean;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -19,22 +17,20 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class OrganizationApplication {
 
     @Bean
-    public ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Organization API")
-                .termsOfServiceUrl("http://www.gonwan.com/")
-                .version("2.0")
+    public GroupedOpenApi groupedOpenApi() {
+        return GroupedOpenApi.builder()
+                .group("Organization API")
+                .packagesToScan(OrganizationServiceController.class.getPackage().getName())
                 .build();
     }
 
     @Bean
-    public Docket docket() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage(getClass().getPackage().getName()))
-                .paths(PathSelectors.any())
-                .build();
+    public OpenAPI openAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Spring Cloud Demo API")
+                        .termsOfService("http://www.gonwan.com/")
+                        .version("2.0"));
     }
 
     public static void main(String[] args) {
