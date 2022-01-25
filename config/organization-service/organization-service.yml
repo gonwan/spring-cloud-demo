@@ -44,7 +44,7 @@ spring:
   sql:
     init:
       mode: ALWAYS
-      schema-locations: schema.sql
+      schema-locations: classpath:schema.sql
   rabbitmq:
     host: 192.168.11.234
     port: 5672

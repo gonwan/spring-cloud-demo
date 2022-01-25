@@ -44,7 +44,7 @@ spring:
   sql:
     init:
       mode: ALWAYS
-      schema-locations: schema.sql
+      schema-locations: classpath:schema.sql
   rabbitmq:
     # vmware
     host: 192.168.127.129

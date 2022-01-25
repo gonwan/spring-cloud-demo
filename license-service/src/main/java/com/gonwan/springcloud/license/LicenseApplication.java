@@ -46,7 +46,7 @@ public class LicenseApplication {
         return new OpenAPI()
                 .info(new Info()
                         .title("Spring Cloud Demo API")
-                        .termsOfService("http://www.gonwan.com/")
+                        .termsOfService("https://www.gonwan.com/")
                         .version("2.0"));
     }
 
