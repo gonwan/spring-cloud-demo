@@ -1,8 +1,10 @@
 package com.gonwan.springcloud.license;
 
 import com.gonwan.springcloud.license.controller.LicenseServiceController;
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -47,7 +49,10 @@ public class LicenseApplication {
                 .info(new Info()
                         .title("Spring Cloud Demo API")
                         .termsOfService("https://www.gonwan.com/")
-                        .version("2.0"));
+                        .version("2.0"))
+                .components(new Components()
+                        .addSecuritySchemes("OAuth2-Token",
+                                new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("uuid")));
     }
 
     @Bean
