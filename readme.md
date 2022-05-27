@@ -94,8 +94,8 @@ Every response contains a correlation ID to help diagnose possible failures amon
 ...
 ```
 Search it in Zipkin to get all trace info, including latencies if you are interested in.
-![zipkin-1](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/zipkin-1.png)
-![zipkin-2](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/zipkin-2.png)
+![zipkin-1](images/zipkin-1.png)
+![zipkin-2](images/zipkin-2.png)
 
 The license service caches organization info in Redis, prefixed with `organizations:`. So you may want to clear them to get a complete tracing of cross service invoke.
 ```
@@ -110,11 +110,11 @@ The organization service and license service have OpenAPI/Swagger integration. A
 
 ### Spring Boot Admin Integration
 Spring Boot Admin is integrated into the eureka server. Access via: `http://${eureka-server}:8761/admin`.
-![sba-1](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/sba-1.png)
+![sba-1](images/sba-1.png)
 
 ### Prometheus & Grafana Integration
 Spring Boot 2.0 added support for using [Micrometer](https://github.com/micrometer-metrics/micrometer) as the metrics collection facility. Prometheus is chosen to be the metrics registry, running at 9090 port. And Grafana is used to do query and visualization, running at 3000 port.
 
 Grafana dashboards imported here are [4701](https://grafana.com/dashboards/4701) & [5373](https://grafana.com/dashboards/5373):
-![grafana-1](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/grafana-1.png)
-![grafana-2](https://raw.githubusercontent.com/gonwan/spring-cloud-demo/master/images/grafana-2.png)
+![grafana-1](images/grafana-1.png)
+![grafana-2](images/grafana-2.png)
