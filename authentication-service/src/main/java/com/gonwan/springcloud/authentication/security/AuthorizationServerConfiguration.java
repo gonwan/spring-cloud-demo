@@ -67,7 +67,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        super.configure(security);
+        security.tokenKeyAccess("permitAll()").checkTokenAccess("permitAll()")/*.allowFormAuthenticationForClients()*/;
     }
 
     /*

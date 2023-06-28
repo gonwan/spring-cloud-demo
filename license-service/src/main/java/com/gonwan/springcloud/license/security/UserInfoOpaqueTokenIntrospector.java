@@ -28,7 +28,7 @@ public class UserInfoOpaqueTokenIntrospector implements OpaqueTokenIntrospector 
     @Autowired
     public UserInfoOpaqueTokenIntrospector(ClientRegistrationRepository registrationRepository) {
         oauth2UserService = new DefaultOAuth2UserService();
-        clientRegistration = registrationRepository.findByRegistrationId("sc-provider");
+        clientRegistration = registrationRepository.findByRegistrationId("sc-client1");
         userNameAttributeName = clientRegistration.getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
     }
 

@@ -62,7 +62,8 @@ spring:
             userNameAttribute: username
             userInfoUri: http://localhost:8901/user
         registration:
-          sc-provider:
+          sc-client1:
+            provider: sc-provider
             clientId: eagleeye
             clientSecret: thisissecret
             authorizationGrantType: client_credentials,password,refresh_token
