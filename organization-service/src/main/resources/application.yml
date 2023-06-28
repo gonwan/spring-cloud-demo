@@ -28,7 +28,7 @@ spring:
   #config:
   #  import: optional:configserver:http://dummy-configserver/
   datasource:
-    url: "jdbc:mysql://192.168.11.234:3306/sc_database?useUnicode=true&characterEncoding=utf8"
+    url: "jdbc:mysql://10.228.131.133:3306/sc_database?useUnicode=true&characterEncoding=utf8"
     username: "springcloud"
     password: "sc_passw0rd"
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -51,6 +51,11 @@ spring:
       password: actuator
       roles: ACTUATOR
     oauth2:
+      resourceserver:
+        opaquetoken:
+          client-id: xxx
+          client-secret: xx
+          introspection-uri: xxxx
       client:
         provider:
           sc-provider:

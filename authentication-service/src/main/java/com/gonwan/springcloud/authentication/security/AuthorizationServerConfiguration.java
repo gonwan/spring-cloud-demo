@@ -23,7 +23,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import java.util.Arrays;
 
 @Configuration
-@EnableAuthorizationServer  /* @EnableResourceServer is used in client to protect resources. */
+@EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
