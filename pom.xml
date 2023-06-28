@@ -27,4 +27,14 @@
             </snapshots>
         </repository>
     </repositories>
+    <!-- required for docker:build -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.43.0</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
