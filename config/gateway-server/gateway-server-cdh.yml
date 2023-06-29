@@ -30,7 +30,7 @@ spring:
         - StripPrefix=2
       routes:
         - id: authentication-id
-          uri: lb://authentication-service
+          uri: lb://authentication-service-legacy
           predicates:
             - Path=/api/auth/**
         - id: organization-id

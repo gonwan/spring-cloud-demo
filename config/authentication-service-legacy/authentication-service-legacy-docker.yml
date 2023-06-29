@@ -15,7 +15,7 @@ eureka:
 
 spring:
   application:
-    name: authentication-service
+    name: authentication-service-legacy
   cloud:
     config:
       enabled: true
@@ -23,7 +23,7 @@ spring:
       allowOverride: true
       overrideSystemProperties: false
   redis:
-    host: 10.228.131.133
+    host: redis
     port: 6379
   security:
     user:

@@ -39,7 +39,7 @@ services:
       CONFIG_SERVER_PORT: "8888"
       ZIPKIN_PORT: "9411"
   authentication-service:
-    image: gonwan/sc-authentication-service:${BUILD_NAME}
+    image: gonwan/sc-authentication-service-legacy:${BUILD_NAME}
     ports:
     - "8901:8901"
     environment:
