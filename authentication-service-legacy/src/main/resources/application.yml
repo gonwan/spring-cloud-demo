@@ -16,7 +16,7 @@ eureka:
 
 spring:
   application:
-    name: authentication-service
+    name: authentication-service-legacy
   cloud:
     config:
       enabled: false

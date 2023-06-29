@@ -4,16 +4,16 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.gonwan.springcloud</groupId>
-    <artifactId>authentication-service</artifactId>
+    <artifactId>authentication-service-legacy</artifactId>
     <version>2.0.0</version>
     <packaging>jar</packaging>
-    <name>Authentication Service</name>
+    <name>Authentication Service (Legacy)</name>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>com.gonwan.springcloud.authentication.AuthenticationApplication</start-class>
-        <docker.image.name>gonwan/sc-authentication-service</docker.image.name>
+        <docker.image.name>gonwan/sc-authentication-service-legacy</docker.image.name>
         <docker.image.tag>${env.BUILD_NAME}</docker.image.tag>
     </properties>
     <parent>
@@ -50,11 +50,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-oauth2-authorization-server</artifactId>-->
-<!--            <version>0.2.1</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.security.oauth.boot</groupId>
             <artifactId>spring-security-oauth2-autoconfigure</artifactId>
@@ -78,6 +73,27 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/dockerfile</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/docker</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.43.0</version>
@@ -86,8 +102,8 @@
                         <image>
                             <name>${docker.image.name}</name>
                             <build>
-                                <filter>@</filter>
-                                <contextDir>${project.basedir}/src/main/docker</contextDir>
+                                <filter>false</filter>
+                                <contextDir>${project.build.directory}/dockerfile</contextDir>
                                 <tags>
                                     <tag>${docker.image.tag}</tag>
                                     <tag>latest</tag>
