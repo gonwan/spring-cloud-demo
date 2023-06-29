@@ -47,8 +47,9 @@ spring:
       password: actuator
       roles: ACTUATOR
   sleuth:
-    #reactor:
-    #  instrumentation-type: decorate_on_each
+    reactor:
+      # https://github.com/spring-cloud/spring-cloud-sleuth/issues/1710
+      instrumentation-type: decorate_queues
     sampler:
       probability: 1.0
   zipkin:
