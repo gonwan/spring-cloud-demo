@@ -13,7 +13,7 @@ while ! `nc -z config-server $CONFIG_SERVER_PORT`; do sleep 3; done
 echo "*******  Configuration Server has started"
 
 echo "********************************************************"
-echo "Starting Authentication Service (Legacy)                "
+echo "Starting Authentication Service                         "
 echo "Using profile: $PROFILE                                 "
 echo "********************************************************"
 java -Djava.security.egd=file:/dev/./urandom -Dserver.port=$SERVER_PORT     \

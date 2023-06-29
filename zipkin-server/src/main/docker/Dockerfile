@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk8:alpine-jre
+FROM eclipse-temurin:8-jre-alpine
 RUN apk update && apk upgrade && apk add curl netcat-openbsd
 RUN mkdir -p /usr/local/@project.artifactId@
 ADD maven/@project.build.finalName@.jar /usr/local/@project.artifactId@/

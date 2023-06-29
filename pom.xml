@@ -13,6 +13,7 @@
         <module>eureka-server</module>
         <module>zipkin-server</module>
         <module>gateway-server</module>
+        <module>authentication-service</module>
         <module>authentication-service-legacy</module>
         <module>organization-service</module>
         <module>license-service</module>
