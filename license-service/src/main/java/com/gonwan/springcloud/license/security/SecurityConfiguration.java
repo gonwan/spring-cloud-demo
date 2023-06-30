@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -36,11 +37,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain resourceWebFilterChain(HttpSecurity http) throws Exception {
         http
             .antMatcher("/v1/**")
-            .authorizeRequests()
+            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                 .antMatchers(HttpMethod.DELETE, "/v1/organizations/**").hasRole("ADMIN")
                 .antMatchers("/v1/organizations/**").hasRole("USER")
-                .and()
-            .oauth2ResourceServer().opaqueToken();
+            )
+            .oauth2ResourceServer((oauth2ResourceServer) -> oauth2ResourceServer
+                .opaqueToken(Customizer.withDefaults()));
         return http.build();
     }
 
@@ -49,11 +51,11 @@ public class SecurityConfiguration {
         http
             .userDetailsService(userDetailsService) /* user/pass in application.yml */
             .requestMatcher(EndpointRequest.toAnyEndpoint())
-            .authorizeRequests()
+            .authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers(EndpointRequest.to(HealthEndpoint.class, InfoEndpoint.class)).permitAll()
                 .anyRequest().authenticated()
-                .and()
-            .httpBasic();
+            )
+            .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 

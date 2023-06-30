@@ -22,15 +22,38 @@ spring:
       enabled: false
   #config:
   #  import: optional:configserver:http://dummy-configserver/
-  redis:
-    host: 192.168.11.234
-    port: 6379
+  data:
+    redis:
+      #port: 6379
+      cluster:
+        nodes: 10.228.131.133:6379
   security:
     user:
       name: actuator
       password: actuator
       roles: ACTUATOR
-
+    oauth2:
+      authorizationserver:
+        client:
+          oidc-client:
+            registration:
+              clientId: "eagleeye"
+              clientSecret: "{noop}thisissecret"
+              clientAuthenticationMethods:
+                - "client_secret_basic"
+              authorizationGrantTypes:
+                - "authorization_code"
+                - "client_credentials"
+                - "refresh_token"
+              scopes:
+                - "webclient"
+                - "mobileclient"
+              redirectUris:
+                - http://dummy-redirect-uri # not used by server
+            token:
+              accessTokenFormat: reference #self-contained
+              accessTokenTimeToLive: 43200s
+            requireAuthorizationConsent: true
 management:
   endpoints:
     web:
@@ -43,3 +66,4 @@ logging:
     org.springframework.web: WARN
     #org.springframework.security: DEBUG
     com.gonwan.springcloud: DEBUG
+    root: debug

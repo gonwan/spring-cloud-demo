@@ -7,6 +7,7 @@ import org.springframework.boot.actuate.info.InfoEndpoint;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,7 +16,7 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 /*
- * See: https://docs.spring.io/spring-security/site/docs/current/reference/html/jc.html#multiple-httpsecurity
+ * See: https://docs.spring.io/spring-security/reference/5.8/servlet/configuration/java.html#_multiple_httpsecurity
  */
 @Order(1)
 @Configuration
@@ -33,11 +34,11 @@ public class ActuatorWebSecurityConfiguration extends WebSecurityConfigurerAdapt
         List<String> roles = securityProperties.getUser().getRoles();
         http
             .requestMatcher(EndpointRequest.toAnyEndpoint())
-            .authorizeRequests()
+            .authorizeRequests((authorizeHttpRequests) -> authorizeHttpRequests
                 .requestMatchers(EndpointRequest.to(HealthEndpoint.class, InfoEndpoint.class)).permitAll()
                 .anyRequest().hasAnyRole(StringUtils.toStringArray(roles))
-                .and()
-            .httpBasic();
+            )
+            .httpBasic(Customizer.withDefaults());
     }
 
     @Override
