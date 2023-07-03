@@ -1,5 +1,5 @@
 server:
-  port: 8901
+  port: 9000 #8901
 
 eureka:
   instance:
@@ -53,7 +53,27 @@ spring:
             token:
               accessTokenFormat: reference #self-contained
               accessTokenTimeToLive: 43200s
-            requireAuthorizationConsent: true
+            #requireAuthorizationConsent: true
+          articles-client:
+            registration:
+              clientId: "articles-client"
+              clientSecret: "{noop}secret"
+              clientAuthenticationMethods:
+                - "client_secret_basic"
+              authorizationGrantTypes:
+                - "authorization_code"
+                - "client_credentials"
+                - "refresh_token"
+              scopes:
+                - "openid"
+                - "articles.read"
+              redirectUris:
+                - http://127.0.0.1:8080/login/oauth2/code/articles-client-oidc
+                - http://127.0.0.1:8080/authorized
+            token:
+              accessTokenFormat: self-contained
+              accessTokenTimeToLive: 43200s
+            #requireAuthorizationConsent: true
 management:
   endpoints:
     web:
@@ -63,7 +83,6 @@ management:
 logging:
   level:
     com.netflix: WARN
-    org.springframework.web: WARN
-    #org.springframework.security: DEBUG
-    com.gonwan.springcloud: DEBUG
-    root: debug
+    org.springframework.web: trace
+    org.springframework.security: trace
+    org.springframework.security.oauth2: trace

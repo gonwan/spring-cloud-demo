@@ -3,15 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.gonwan.springcloud</groupId>
-    <artifactId>authentication-service</artifactId>
+    <artifactId>authentication-service-next</artifactId>
     <version>2.0.0</version>
     <packaging>jar</packaging>
-    <name>Authentication Service</name>
+    <name>Authentication Service (Next)</name>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>com.gonwan.springcloud.authentication.AuthenticationApplication</start-class>
+        <start-class>com.gonwan.springcloud.authentication.NextAuthenticationApplication</start-class>
         <docker.image.name>gonwan/sc-authentication-service</docker.image.name>
         <docker.image.tag>${env.BUILD_NAME}</docker.image.tag>
     </properties>
@@ -37,10 +37,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>

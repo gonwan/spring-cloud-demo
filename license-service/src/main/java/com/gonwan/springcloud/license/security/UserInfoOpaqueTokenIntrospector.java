@@ -18,6 +18,11 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/*
+ * We are using resource server here, and have no relationship with oauth client api.
+ * The client api calls are here, because we use it to simplify invoke of userinfo endpoint.
+ * See: https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html#oauth2resourceserver-opaque-userinfo
+ */
 @Component
 public class UserInfoOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 

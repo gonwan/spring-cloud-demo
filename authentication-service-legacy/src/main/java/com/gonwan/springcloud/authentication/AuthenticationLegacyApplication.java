@@ -22,7 +22,7 @@ import java.util.Map;
 @EnableEurekaClient
 @EnableResourceServer  /* required for the controller to work */
 @RestController
-public class AuthenticationApplication {
+public class AuthenticationLegacyApplication {
 
     /*
      * The legacy resource server creates AuthenticationManager & ResourceServerTokenServices manually without DI.
@@ -46,7 +46,7 @@ public class AuthenticationApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthenticationApplication.class, args);
+        SpringApplication.run(AuthenticationLegacyApplication.class, args);
     }
 
 }

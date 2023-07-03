@@ -11,7 +11,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>com.gonwan.springcloud.authentication.AuthenticationApplication</start-class>
         <docker.image.name>gonwan/sc-authentication-service-legacy</docker.image.name>
         <docker.image.tag>${env.BUILD_NAME}</docker.image.tag>
     </properties>
