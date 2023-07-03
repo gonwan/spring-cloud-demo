@@ -1,5 +1,5 @@
 server:
-  port: 9000 #8901
+  port: 8901
 
 eureka:
   instance:
@@ -16,7 +16,7 @@ eureka:
 
 spring:
   application:
-    name: authentication-service
+    name: authentication-service-next
   cloud:
     config:
       enabled: false
@@ -24,9 +24,8 @@ spring:
   #  import: optional:configserver:http://dummy-configserver/
   data:
     redis:
-      #port: 6379
-      cluster:
-        nodes: 10.228.131.133:6379
+      host: 192.168.11.234
+      port: 6379
   security:
     user:
       name: actuator
@@ -35,7 +34,7 @@ spring:
     oauth2:
       authorizationserver:
         client:
-          oidc-client:
+          eagleeye-client:
             registration:
               clientId: "eagleeye"
               clientSecret: "{noop}thisissecret"
@@ -49,12 +48,15 @@ spring:
                 - "webclient"
                 - "mobileclient"
               redirectUris:
-                - http://dummy-redirect-uri # not used by server
+                - http://127.0.0.1:8080/login/oauth2/code/articles-client-oidc
+                - http://127.0.0.1:8080/authorized
             token:
               accessTokenFormat: reference #self-contained
               accessTokenTimeToLive: 43200s
             #requireAuthorizationConsent: true
           articles-client:
+            # from this sample:
+            # https://github.com/Baeldung/spring-security-oauth/tree/master/oauth-authorization-server
             registration:
               clientId: "articles-client"
               clientSecret: "{noop}secret"
@@ -74,6 +76,7 @@ spring:
               accessTokenFormat: self-contained
               accessTokenTimeToLive: 43200s
             #requireAuthorizationConsent: true
+
 management:
   endpoints:
     web:
@@ -83,6 +86,6 @@ management:
 logging:
   level:
     com.netflix: WARN
-    org.springframework.web: trace
-    org.springframework.security: trace
-    org.springframework.security.oauth2: trace
+    org.springframework.web: WARN
+    #org.springframework.security: DEBUG
+    com.gonwan.springcloud: DEBUG
