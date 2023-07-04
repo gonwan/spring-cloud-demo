@@ -48,7 +48,7 @@ spring:
                 - "webclient"
                 - "mobileclient"
               redirectUris:
-                - http://127.0.0.1:8080/login/oauth2/code/articles-client-oidc
+                - http://127.0.0.1:8080/login/oauth2/code/eagleeye-client
                 - http://127.0.0.1:8080/authorized
             token:
               accessTokenFormat: reference #self-contained
