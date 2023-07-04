@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+/* not working */
 //@Configuration
 public class ActuatorSecurityConfiguration {
 

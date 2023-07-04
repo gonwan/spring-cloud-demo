@@ -6,11 +6,8 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Role;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
@@ -50,6 +47,18 @@ public class AuthorizationServerConfiguration {
         MediaTypeRequestMatcher requestMatcher = new MediaTypeRequestMatcher(MediaType.TEXT_HTML);
         requestMatcher.setIgnoredMediaTypes(Set.of(MediaType.ALL));
         return requestMatcher;
+    }
+
+    @Bean
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+            //.csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests((authorize) -> authorize
+                //.requestMatchers(new NegatedRequestMatcher(new AntPathRequestMatcher("/actuator/**"))).permitAll()
+                .anyRequest().authenticated()
+            )
+            .formLogin(Customizer.withDefaults());
+        return http.build();
     }
 
     /* see:  OAuth2AuthorizationServerWebSecurityConfiguration */
