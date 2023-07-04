@@ -18,7 +18,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-@Configuration
+//@Configuration
 public class ActuatorSecurityConfiguration {
 
     @Bean("actuatorUserDetailsService")

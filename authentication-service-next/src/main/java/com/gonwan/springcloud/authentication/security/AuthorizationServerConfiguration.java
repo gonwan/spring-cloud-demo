@@ -60,7 +60,6 @@ public class AuthorizationServerConfiguration {
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
             .oidc(Customizer.withDefaults());  /* Enable OpenID Connect 1.0 */
         http
-            .securityMatcher("/login", "/oauth2/**")
             .userDetailsService(userDetailsService)
             // Redirect to the login page when not authenticated from the
             // authorization endpoint
